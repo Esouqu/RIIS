@@ -1,0 +1,146 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model EventPost {
+  id        Int      @id @default(autoincrement())
+  title     String
+  type      String
+  imageUrl  String
+  content   String?
+  startTime String
+  endTime   String
+  createdAt DateTime @default(now())
+}
+
+model Art {
+  id         String    @id @unique @default(uuid())
+  name       String
+  portrait   String
+  full       String
+  operatorId String?
+  Operator   Operator? @relation(fields: [operatorId], references: [id])
+}
+
+model RangeCell {
+  id      String  @id @unique @default(uuid())
+  col     Int
+  row     Int
+  rangeId String?
+  Range   Range?  @relation(fields: [rangeId], references: [id])
+}
+
+model Range {
+  id             String          @id @unique @default(uuid())
+  name           String          @unique
+  grid           RangeCell[]
+  skillLevels    SkillLevel[]    @relation("RangeToSkillLevel")
+  talents        Talent[]        @relation("RangeToTalent")
+  operatorPhases OperatorPhase[]
+}
+
+model SkillLevel {
+  id          String  @id @unique @default(uuid())
+  levelId     Int     @default(0)
+  description String  @default("")
+  spCost      Int
+  initSp      Int
+  duration    String
+  skillId     String?
+  Skill       Skill?  @relation(fields: [skillId], references: [id])
+  range       Range[] @relation("RangeToSkillLevel")
+}
+
+model Skill {
+  id             String       @id
+  name           String
+  chargeType     String
+  activationType String
+  iconUrl        String
+  skillId        Int          @default(0)
+  levels         SkillLevel[]
+  operators      Operator[]   @relation("OperatorToSkill")
+}
+
+model TalentLevel {
+  id          Int     @id @unique @default(autoincrement())
+  levelId     Int     @default(0)
+  description String
+  phase       Int
+  level       Int
+  potential   Int
+  talentId    String?
+  talent      Talent? @relation(fields: [talentId], references: [id])
+}
+
+model Talent {
+  id         String        @id @unique @default(uuid())
+  name       String
+  operatorId String?
+  operator   Operator?     @relation(fields: [operatorId], references: [id])
+  levels     TalentLevel[]
+  range      Range[]       @relation("RangeToTalent")
+}
+
+model Summon {
+  id         String    @id @unique
+  operatorId String?
+  Operator   Operator? @relation(fields: [operatorId], references: [id])
+}
+
+model OperatorAttributes {
+  id              String @id @unique @default(uuid())
+  maxHp           Int
+  atk             Int
+  def             Int
+  magicResistance Float
+  cost            Int
+  blockCount      Int
+  baseAttackTime  Float
+  respawnTime     Int
+
+  OperatorPhase   OperatorPhase? @relation(fields: [operatorPhaseId], references: [id])
+  operatorPhaseId String?
+}
+
+model OperatorPhase {
+  id                  String               @id
+  range               Range[]
+  maxLevel            Int
+  attributesKeyFrames OperatorAttributes[]
+
+  Operator   Operator? @relation(fields: [operatorId], references: [id])
+  operatorId String?
+}
+
+model Operator {
+  id             String          @id
+  displayNumber  String?         @unique
+  position       String
+  rarity         Int
+  tagList        String[]
+  trait          String?
+  class          String
+  group          String?
+  isObtainable   Boolean
+  nation         String?
+  subClass       String
+  team           String?
+  name           String
+  obtainApproach String?
+  gender         String?
+  artist         String?
+  va             String
+  portraitUrl    String
+  artList        Art[]
+  summons        Summon[]
+  talents        Talent[]
+  skills         Skill[]         @relation("OperatorToSkill")
+  phases         OperatorPhase[]
+}
