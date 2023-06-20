@@ -3,6 +3,10 @@
   import EventsFeed from "$lib/components/EventsFeed.svelte";
 </script>
 
+<svelte:head>
+  <title>Events</title>
+</svelte:head>
+
 <main class="main">
   <EventsFeed eventsData={[]} />
 </main>

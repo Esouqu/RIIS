@@ -54,6 +54,10 @@
   });
 </script>
 
+<svelte:head>
+  <title>{operator ? operator.name : "Operator"}</title>
+</svelte:head>
+
 <main class="main">
   <section class="section section_art">
     <Container --px={"10px"} --py={"10px"}>

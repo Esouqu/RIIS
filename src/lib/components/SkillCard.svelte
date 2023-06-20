@@ -41,6 +41,7 @@
   --cc-gap={"0"}
   --cc-p={"0"}
   --cc-align={"normal"}
+  --cc-width={"100%"}
   withTitle={false}
 >
   <div class="tabs-wrapper">

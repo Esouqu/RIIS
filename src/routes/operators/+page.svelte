@@ -55,6 +55,10 @@
   }
 </script>
 
+<svelte:head>
+  <title>Operators</title>
+</svelte:head>
+
 <main class="main">
   <Container
     htmlTag="div"
@@ -66,14 +70,16 @@
     <div class="filters-wrapper">
       <CardContainer title="Search">
         <div class="input-wrapper">
-          <input
-            type="text"
-            id="search"
-            class="search"
-            maxlength="20"
-            placeholder="Operator name"
-            bind:value={searchValue}
-          />
+          <div class="input-inner-wrapper">
+            <input
+              type="text"
+              id="search"
+              class="search"
+              maxlength="20"
+              placeholder="Operator name"
+              bind:value={searchValue}
+            />
+          </div>
         </div>
       </CardContainer>
       <CardContainer title="Class">
@@ -126,6 +132,12 @@
     gap: 5px;
   }
   .input-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+  }
+  .input-inner-wrapper {
     position: relative;
 
     &::after {

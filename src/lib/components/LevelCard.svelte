@@ -29,8 +29,8 @@
     {/each}
   </div>
   <div class="level-card">
-    <div>
-      <div class="level" />
+    <div class="level-card__head">
+      <div class="level-card__counter" />
       <RangeSlider
         value={sliderValue}
         max={currentPhase}
@@ -38,6 +38,14 @@
         on:mouseup={() => (sliderValue = Math.round(sliderValue))}
         on:input={(e) => handleRangeInput(e)}
       />
+    </div>
+    <div>
+      <div>
+        <!-- {#each phases as stats}
+          
+        {/each} -->
+      </div>
+      <div />
     </div>
   </div>
 </CardContainer>

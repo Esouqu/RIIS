@@ -48,6 +48,7 @@
   --cc-p={"0"}
   --cc-gap={"0"}
   --cc-align={"normal"}
+  --cc-width={"100%"}
 >
   <div
     class="card__title"
