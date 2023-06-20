@@ -159,16 +159,12 @@
   }
   .section {
     overflow: hidden;
+    margin: 10px;
 
     &_info {
       display: flex;
       justify-content: center;
       font-family: "Overpass", sans-serif;
-      margin: 10px 0;
-    }
-
-    &_art {
-      margin: 10px;
     }
   }
   .info-wrapper {
