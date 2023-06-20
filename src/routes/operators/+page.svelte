@@ -60,60 +60,65 @@
 </svelte:head>
 
 <main class="main">
-  <Container
-    htmlTag="div"
-    --justify={"start"}
-    --py={"20px"}
-    --px={"20px"}
-    --gap={"40px"}
-  >
-    <div class="filters-wrapper">
-      <CardContainer title="Search">
-        <div class="input-wrapper">
-          <div class="input-inner-wrapper">
-            <input
-              type="text"
-              id="search"
-              class="search"
-              maxlength="20"
-              placeholder="Operator name"
-              bind:value={searchValue}
-            />
+  <Container htmlTag="div" --justify={"start"}>
+    <div class="scroll-container">
+      <div class="filters-wrapper">
+        <CardContainer title="Search">
+          <div class="input-wrapper">
+            <div class="input-inner-wrapper">
+              <input
+                type="text"
+                id="search"
+                class="search"
+                maxlength="20"
+                placeholder="Operator name"
+                bind:value={searchValue}
+              />
+            </div>
           </div>
-        </div>
-      </CardContainer>
-      <CardContainer title="Class">
-        <div class="filter-buttons-wrapper">
-          {#each classFilterOptions as { name, icon }}
-            <FilterButton
-              {icon}
-              isSelected={selectedClasses.includes(name)}
-              handleClick={() => toggleOperatorClass(name)}
+        </CardContainer>
+        <CardContainer title="Class">
+          <div class="filter-buttons-wrapper">
+            {#each classFilterOptions as { name, icon }}
+              <FilterButton
+                {icon}
+                isSelected={selectedClasses.includes(name)}
+                handleClick={() => toggleOperatorClass(name)}
+              />
+            {/each}
+          </div>
+        </CardContainer>
+      </div>
+      {#if isOperatorsLoading}
+        <Loader />
+      {:else}
+        <div class="grid">
+          {#each filteredOperators as { id, name, portraitUrl, rarity } (id)}
+            <OperatorPortrait
+              {name}
+              {rarity}
+              operatorId={id}
+              imageUrl={portraitUrl}
             />
           {/each}
         </div>
-      </CardContainer>
+      {/if}
     </div>
-    {#if isOperatorsLoading}
-      <Loader />
-    {:else}
-      <div class="grid">
-        {#each filteredOperators as { id, name, portraitUrl, rarity } (id)}
-          <OperatorPortrait
-            {name}
-            {rarity}
-            operatorId={id}
-            imageUrl={portraitUrl}
-          />
-        {/each}
-      </div>
-    {/if}
   </Container>
 </main>
 
 <style lang="scss">
   .main {
     margin: 10px;
+  }
+  .scroll-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+    height: calc(100vh - 60px);
+    padding: 20px;
+    overflow-y: auto;
   }
   .grid {
     display: flex;

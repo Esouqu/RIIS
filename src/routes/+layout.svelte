@@ -25,8 +25,6 @@
     width: calc(100vw - (100vw - 100%));
   }
   .header-wrapper {
-    position: sticky;
-    top: 0;
     display: flex;
     justify-content: flex-end;
     align-items: center;

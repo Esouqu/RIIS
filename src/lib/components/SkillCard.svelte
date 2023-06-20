@@ -216,6 +216,10 @@
       font-size: 16px;
       font-weight: 500;
       white-space: pre-wrap;
+
+      & p {
+        margin: 0;
+      }
     }
 
     &-details-wrapper {

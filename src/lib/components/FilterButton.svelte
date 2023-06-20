@@ -29,6 +29,7 @@
     border: 0;
     background-color: var(--main-color-ultra-white);
     opacity: 0.5;
+    transition: 0.3s;
     cursor: pointer;
 
     &:hover {
@@ -36,7 +37,12 @@
     }
 
     &.selected {
+      background-color: var(--main-color-blue);
       opacity: 1;
+
+      & img {
+        filter: invert(0);
+      }
     }
   }
   .image-wrapper {
