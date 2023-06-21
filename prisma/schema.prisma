@@ -143,4 +143,5 @@ model Operator {
   talents        Talent[]
   skills         Skill[]         @relation("OperatorToSkill")
   phases         OperatorPhase[]
+  releaseDate    DateTime?
 }

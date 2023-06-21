@@ -8,14 +8,9 @@
     { name: "Headhunt", path: "/headhunt" },
     { name: "Store", path: "/store" },
   ];
-
-  // const lastViewed = $page.url.split('/')
 </script>
 
 <nav>
-  <!-- <pre>
-    {JSON.stringify($page, null, 2)}
-  </pre> -->
   <ul class="nav-list">
     {#each pages as currentPage}
       <li

@@ -20,6 +20,7 @@
   import SkillCard from "$lib/components/SkillCard.svelte";
   import getOperatorClassImage from "$lib/utils/getOperatorClassImage";
   import getGenderIcon from "$lib/utils/getGenderIcon";
+  import Tag from "$lib/components/Tag.svelte";
 
   interface IOperatorConnects {
     artList: Array<Art>;
@@ -60,7 +61,7 @@
 
 <main class="main">
   <section class="section section_art">
-    <Container --px={"10px"} --py={"10px"}>
+    <Container>
       {#if isLoading}
         <Loader />
       {:else}
@@ -94,24 +95,20 @@
               <img src={getOperatorClassImage(operator.class)} alt="" />
             </div>
             <div class="tags-wrapper">
-              <div class="tag">
-                <img src={getGenderIcon(operator.gender)} alt="" />
-              </div>
+              <Tag iconUrl={getGenderIcon(operator.gender)} isOnlyIcon={true} />
               {#each operator.tagList as tag}
-                <div class="tag">
-                  <span>{tag}</span>
-                </div>
+                <Tag text={tag} />
               {/each}
             </div>
           </div>
         {/if}
       </div>
       <Container
-        --px={"20px"}
-        --py={"15px"}
-        --gap={"15px"}
-        --justify={"start"}
-        --overflow={"auto"}
+        --cont-px={"20px"}
+        --cont-py={"15px"}
+        --cont-gap={"15px"}
+        --cont-justify={"start"}
+        --cont-overflow={"auto"}
       >
         {#if isLoading}
           <Loader />
@@ -158,13 +155,12 @@
     overflow: hidden;
   }
   .section {
-    overflow: hidden;
     margin: 10px;
+    overflow: hidden;
 
     &_info {
       display: flex;
       justify-content: center;
-      font-family: "Overpass", sans-serif;
     }
   }
   .info-wrapper {
@@ -224,16 +220,6 @@
   .tags-wrapper {
     display: flex;
     gap: 5px;
-
-    & .tag {
-      padding: 5px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-      background-color: var(--main-color-ultra-white);
-
-      & img {
-        height: 100%;
-      }
-    }
   }
   .talents-wrapper {
     width: 100%;

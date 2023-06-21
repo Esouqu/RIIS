@@ -26,8 +26,6 @@
   let selectedClasses: Array<string> = [];
 
   onMount(async () => {
-    isOperatorsLoading = true;
-
     await fetchWithType<Array<Operator>>(`/api/operators`).then(
       (data) => (operators = data)
     );
@@ -60,7 +58,7 @@
 </svelte:head>
 
 <main class="main">
-  <Container htmlTag="div" --justify={"start"}>
+  <Container --cont-justify={"start"}>
     <div class="scroll-container">
       <div class="filters-wrapper">
         <CardContainer title="Search">

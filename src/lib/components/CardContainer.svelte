@@ -8,7 +8,7 @@
 <div
   class="card-container"
   class:bordered={withBorderRadius}
-  in:slide={{ duration: 300 }}
+  in:slide={{ duration: 1000 }}
   out:fade={{ duration: 200 }}
 >
   {#if withTitle}

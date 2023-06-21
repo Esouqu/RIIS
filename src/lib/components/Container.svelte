@@ -23,18 +23,18 @@
     position: relative;
     display: flex;
     flex-direction: column;
-    justify-content: var(--justify, center);
-    align-items: var(--align, center);
-    gap: var(--gap, 0);
+    justify-content: var(--cont-justify, center);
+    align-items: var(--cont-align, center);
+    gap: var(--cont-gap, 0);
     box-sizing: border-box;
     width: 100%;
     height: 100%;
-    padding: var(--py, 0px) var(--px, 0px);
+    padding: var(--cont-p, var(--cont-py, 0px) var(--cont-px, 0px));
     outline: 2px solid var(--sub-color-gray);
     outline-offset: -2px;
     background-color: var(--bg-color-white-50);
     transition: 0.2s;
-    overflow-y: var(--overflow, hidden);
+    overflow-y: var(--cont-overflow, hidden);
     overflow-x: hidden;
 
     &::-webkit-scrollbar {

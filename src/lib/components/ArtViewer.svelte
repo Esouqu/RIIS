@@ -121,6 +121,7 @@
     height: 100%;
     width: 100%;
     transition: 0.2s;
+    cursor: all-scroll;
 
     &.dragged {
       transition: none;
