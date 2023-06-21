@@ -12,6 +12,7 @@ export const GET: RequestHandler = async () => {
     },
     orderBy: {
       rarity: 'desc',
+      releaseDate: 'desc',
     }
   });
 
