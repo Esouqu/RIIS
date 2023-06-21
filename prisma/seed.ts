@@ -1,5 +1,4 @@
 import { PrismaClient } from "@prisma/client";
-// import eventData from "../src/lib/event_data.json" assert { type: "json" }
 
 const prisma = new PrismaClient();
 
@@ -336,9 +335,9 @@ async function processOperators() {
     //     }
     //   });
 
-    const isExisted = await prisma.operator.findUnique({
+    const isExisted = await prisma.operator.findFirst({
       where: {
-        id: p.id
+        id: p.id,
       }
     })
 
@@ -361,37 +360,37 @@ async function processOperators() {
           // nation: p.info.nationId !== null ? p.info.nationId : undefined,
           // team: p.info.teamId !== null ? p.info.teamId : undefined,
           // isObtainable: !p.info.isNotObtainable,
-          // obtainApproach: p.info.itemObtainApproach,
+          obtainApproach: operatorsObtainMethod.find(({ name }) => p.info.name === name)?.obtainMethod,
           // tagList: p.info.tagList !== null ? p.info.tagList : [],
           // gender: gender(p.id),
           trait: p.info.trait ? replaceTextDescriptionValues(p.info.description, p.info.trait.candidates[p.info.trait.candidates.length - 1].blackboard) : p.info.description,
-          phases: {
-            create: p.info.phases.map((phase) => {
-              return {
-                id: p.id,
-                range: {
-                  connect: {
-                    name: phase.rangeId,
-                  }
-                },
-                maxLevel: phase.maxLevel,
-                attributesKeyFrames: {
-                  create: phase.attributesKeyFrames.map((keyFrame) => {
-                    return {
-                      maxHp: keyFrame.data.maxHp,
-                      atk: keyFrame.data.atk,
-                      def: keyFrame.data.def,
-                      magicResistance: keyFrame.data.magicResistance,
-                      cost: keyFrame.data.cost,
-                      blockCount: keyFrame.data.blockCnt,
-                      baseAttackTime: keyFrame.data.baseAttackTime,
-                      respawnTime: keyFrame.data.respawnTime,
-                    }
-                  })
-                }
-              }
-            })
-          },
+          // phases: {
+          //   create: p.info.phases.map((phase) => {
+          //     return {
+          //       id: p.id,
+          //       range: {
+          //         connect: {
+          //           name: phase.rangeId,
+          //         }
+          //       },
+          //       maxLevel: phase.maxLevel,
+          //       attributesKeyFrames: {
+          //         create: phase.attributesKeyFrames.map((keyFrame) => {
+          //           return {
+          //             maxHp: keyFrame.data.maxHp,
+          //             atk: keyFrame.data.atk,
+          //             def: keyFrame.data.def,
+          //             magicResistance: keyFrame.data.magicResistance,
+          //             cost: keyFrame.data.cost,
+          //             blockCount: keyFrame.data.blockCnt,
+          //             baseAttackTime: keyFrame.data.baseAttackTime,
+          //             respawnTime: keyFrame.data.respawnTime,
+          //           }
+          //         })
+          //       }
+          //     }
+          //   })
+          // },
           // talents: {
           //   create: p.info.talents !== null ? p.info.talents.map((talent) => {
           //     return {

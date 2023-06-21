@@ -28,12 +28,12 @@
     padding: 5px;
     border: 0;
     background-color: var(--main-color-ultra-white);
-    opacity: 0.5;
+    opacity: 0.4;
     transition: 0.3s;
     cursor: pointer;
 
     &:hover {
-      opacity: 0.8;
+      opacity: 0.7;
     }
 
     &.selected {

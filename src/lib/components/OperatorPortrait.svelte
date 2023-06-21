@@ -6,10 +6,14 @@
   export let name: string;
   export let imageUrl: string;
   export let rarity: number;
+
+  function load() {
+    return {};
+  }
 </script>
 
 <a
-  href={`${$page.route.id}/${operatorId}`}
+  href={`operators/${operatorId}`}
   in:fade={{ duration: 200, delay: 200 }}
   out:fade={{ duration: 200 }}
 >
