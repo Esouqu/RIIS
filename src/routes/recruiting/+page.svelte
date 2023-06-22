@@ -91,8 +91,6 @@
     .filter((variant) => variant.matchingOperators.length > 0)
     .sort((a, b) => a.matchingOperators.length - b.matchingOperators.length)
     .sort((a, b) => b.lowestRarity - a.lowestRarity);
-
-  $: console.log(variants);
 </script>
 
 <svelte:head><title>Recruiting</title></svelte:head>
