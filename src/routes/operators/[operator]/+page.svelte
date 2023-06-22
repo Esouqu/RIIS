@@ -53,8 +53,6 @@
 
     isLoading = false;
   });
-
-  $: console.log(operator);
 </script>
 
 <svelte:head>
