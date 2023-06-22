@@ -1,16 +1,10 @@
 <script lang="ts">
-  import { slide, fade } from "svelte/transition";
   export let title: string = "Title";
   export let withTitle: boolean = true;
   export let withBorderRadius: boolean = true;
 </script>
 
-<div
-  class="card-container"
-  class:bordered={withBorderRadius}
-  in:slide={{ duration: 1000 }}
-  out:fade={{ duration: 200 }}
->
+<div class="card-container" class:bordered={withBorderRadius}>
   {#if withTitle}
     <span>{title}</span>
   {/if}

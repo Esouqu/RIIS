@@ -12,12 +12,12 @@
   const classFilterOptions = [
     { name: "caster", icon: getOperatorClassImage("caster") },
     { name: "medic", icon: getOperatorClassImage("medic") },
-    { name: "pioneer", icon: getOperatorClassImage("pioneer") },
+    { name: "vanguard", icon: getOperatorClassImage("vanguard") },
     { name: "sniper", icon: getOperatorClassImage("sniper") },
-    { name: "special", icon: getOperatorClassImage("special") },
-    { name: "support", icon: getOperatorClassImage("support") },
-    { name: "tank", icon: getOperatorClassImage("tank") },
-    { name: "warrior", icon: getOperatorClassImage("warrior") },
+    { name: "specialist", icon: getOperatorClassImage("specialist") },
+    { name: "supporter", icon: getOperatorClassImage("supporter") },
+    { name: "defender", icon: getOperatorClassImage("defender") },
+    { name: "guard", icon: getOperatorClassImage("guard") },
   ];
 
   let operators: Array<Operator> = [];
@@ -91,12 +91,13 @@
         <Loader />
       {:else}
         <div class="grid">
-          {#each filteredOperators as { id, name, portraitUrl, rarity } (id)}
+          {#each filteredOperators as { id, name, portraitUrl, rarity }, idx}
             <OperatorPortrait
               {name}
               {rarity}
               operatorId={id}
               imageUrl={portraitUrl}
+              transitionDelay={5 * idx}
             />
           {/each}
         </div>

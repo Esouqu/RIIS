@@ -10,9 +10,10 @@ export const GET: RequestHandler = async () => {
         { obtainApproach: 'Recruitment & Headhunting' },
       ]
     },
-    orderBy: {
-      rarity: 'desc',
-    }
+    orderBy: [
+      { rarity: 'desc' },
+      { releaseDate: 'desc' },
+    ]
   });
 
   return json(operators);
