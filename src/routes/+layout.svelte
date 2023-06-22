@@ -1,5 +1,6 @@
 <script>
   import "normalize.css";
+  import "../global.css";
   import Footer from "$lib/components/Footer.svelte";
   import HomeLogo from "$lib/components/HomeLogo.svelte";
   import Navigation from "$lib/components/Navigation.svelte";
