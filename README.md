@@ -1,3 +1,2 @@
-# RII App
-
-contains information about arknights operators and some other features
+# RIIS App
+Rhodes Island Information Space contains information about arknights operators and some other features
