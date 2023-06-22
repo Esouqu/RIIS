@@ -1,22 +1,14 @@
 <script lang="ts">
-  import { page } from "$app/stores";
   import { fade } from "svelte/transition";
 
   export let operatorId: string;
   export let name: string;
   export let imageUrl: string;
   export let rarity: number;
-
-  function load() {
-    return {};
-  }
+  export let transitionDelay: number = 0;
 </script>
 
-<a
-  href={`operators/${operatorId}`}
-  in:fade={{ duration: 200, delay: 200 }}
-  out:fade={{ duration: 200 }}
->
+<a href={`operators/${operatorId}`} in:fade={{ delay: transitionDelay }}>
   <div
     class="operator-portrait"
     class:rarity-1={rarity === 0}

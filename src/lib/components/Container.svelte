@@ -1,6 +1,4 @@
 <script lang="ts">
-  import { fade } from "svelte/transition";
-
   export let htmlTag: string = "div";
   export let id: string = "";
   export let isHovered: boolean = false;
@@ -13,7 +11,6 @@
   id={id ? id : null}
   on:mouseleave
   on:mouseenter
-  transition:fade={{ duration: 200 }}
 >
   <slot />
 </svelte:element>

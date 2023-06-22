@@ -120,28 +120,29 @@ model OperatorPhase {
 }
 
 model Operator {
-  id             String          @id
-  displayNumber  String?         @unique
-  position       String
-  rarity         Int
-  tagList        String[]
-  trait          String?
-  class          String
-  group          String?
-  isObtainable   Boolean
-  nation         String?
-  subClass       String
-  team           String?
-  name           String
-  obtainApproach String?
-  gender         String?
-  artist         String?
-  va             String
-  portraitUrl    String
-  artList        Art[]
-  summons        Summon[]
-  talents        Talent[]
-  skills         Skill[]         @relation("OperatorToSkill")
-  phases         OperatorPhase[]
-  releaseDate    DateTime?
+  id                 String          @id
+  displayNumber      String?         @unique
+  position           String
+  rarity             Int
+  tagList            String[]
+  recruitmentTagList String[]
+  trait              String?
+  class              String
+  group              String?
+  isObtainable       Boolean
+  nation             String?
+  subClass           String
+  team               String?
+  name               String
+  obtainApproach     String?
+  gender             String?
+  artist             String?
+  va                 String
+  portraitUrl        String
+  artList            Art[]
+  summons            Summon[]
+  talents            Talent[]
+  skills             Skill[]         @relation("OperatorToSkill")
+  phases             OperatorPhase[]
+  releaseDate        DateTime?
 }

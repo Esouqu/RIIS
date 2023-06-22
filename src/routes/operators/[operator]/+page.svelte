@@ -53,6 +53,8 @@
 
     isLoading = false;
   });
+
+  $: console.log(operator);
 </script>
 
 <svelte:head>
@@ -72,11 +74,7 @@
 
   <section class="section section_info">
     <div class="info-wrapper">
-      <div
-        class="nameplate"
-        in:slide={{ duration: 300 }}
-        out:fade={{ duration: 200 }}
-      >
+      <div class="nameplate">
         {#if isLoading}
           <Loader />
         {:else}
@@ -85,8 +83,8 @@
               <h1>{operator.name}</h1>
               <div class="stars-wrapper">
                 {#each { length: operator.rarity + 1 } as _, idx}
-                  <div class="star" in:fade={{ delay: 50 * idx }} out:fade>
-                    <img src={star} alt="" />
+                  <div class="star" in:fade={{ delay: 50 * idx }}>
+                    <img src={star} alt="star" />
                   </div>
                 {/each}
               </div>

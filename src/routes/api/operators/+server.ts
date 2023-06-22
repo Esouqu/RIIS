@@ -7,10 +7,10 @@ export const GET: RequestHandler = async () => {
     where: {
       isObtainable: true,
     },
-    orderBy: {
-      rarity: 'desc',
-      releaseDate: 'desc',
-    }
+    orderBy: [
+      { rarity: 'desc' },
+      { releaseDate: 'desc' },
+    ]
   });
 
   return json(operators);
