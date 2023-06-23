@@ -21,13 +21,13 @@
     padding: 0 5px;
     border: 0;
     opacity: 0.5;
-    background-color: var(--main-color-ultra-white);
+    background-color: var(--bg-accent-color);
     transition: 0.2s;
     cursor: pointer;
 
     & img {
       width: 30px;
-      filter: invert(1);
+      filter: invert(var(--img-invert));
     }
 
     &.selected {

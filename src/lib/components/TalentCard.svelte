@@ -94,7 +94,8 @@
       <p in:fade={{ duration: 400 }}>
         {#each replaceTextTags(description) as item}
           {#if item.description && item.title}
-            <span style="color: royalblue;">{item.description}</span>
+            <span style="color: var(--rarity-color-3);">{item.description}</span
+            >
           {:else}
             {item.text}
           {/if}
@@ -112,6 +113,7 @@
       align-items: center;
       height: 40px;
       padding: 0 10px;
+      transition: 0.2s;
 
       & h2 {
         margin: 0;
@@ -152,6 +154,7 @@
       align-items: center;
       gap: 20px;
       padding: 20px;
+      transition: 0.2s;
 
       & p {
         margin: 0;
@@ -174,7 +177,7 @@
     & img {
       width: 100%;
       padding: 0 100px;
-      filter: invert(1);
+      filter: invert(var(--img-invert));
     }
   }
 </style>

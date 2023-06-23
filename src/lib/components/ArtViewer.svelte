@@ -19,6 +19,20 @@
 
   $: currentArt = artList[currentImageIdx].full;
 
+  onMount(async () => {
+    await Promise.all(
+      artList.map((art) => {
+        return new Promise((resolve, reject) => {
+          const img = new Image();
+
+          img.onload = resolve;
+          img.onerror = reject;
+          img.src = art.full;
+        });
+      })
+    );
+  });
+
   function handleArtButtonClick(idx: number) {
     const isPositive = currentImageIdx - idx > 0;
 
@@ -43,19 +57,6 @@
       artScale -= 0.1;
     }
   }
-
-  onMount(async () => {
-    await Promise.all(
-      artList.map((art) => {
-        return new Promise((resolve, reject) => {
-          const img = new Image();
-          img.onload = resolve;
-          img.onerror = reject;
-          img.src = art.full;
-        });
-      })
-    );
-  });
 </script>
 
 <div>
@@ -63,7 +64,7 @@
     {#each artList as { name, portrait }, idx}
       <ArtButton
         --p={name === "Shop" ? "0" : "5px"}
-        --invert={name === "Shop" ? "0" : "1"}
+        --invert={name === "Shop" ? "0" : null}
         iconUrl={name === "Shop" ? portrait : getEliteIcon(name)}
         isSelected={idx === currentImageIdx}
         clickHandler={() => handleArtButtonClick(idx)}
@@ -86,6 +87,7 @@
       on:wheel={(e) => handleArtScroll(e)}
       on:introend={() => (flyDirection = 0)}
     >
+      <!-- <div class="image-placeholder" /> -->
       <img src={currentArt} alt="" style:transform={`scale(${artScale})`} />
     </div>
   {/key}
@@ -148,5 +150,16 @@
     padding: 0 10px;
     /* text-align: center; */
     /* font-size: 20px; */
+  }
+  .image-placeholder {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    transition: 0.2s;
+    background-image: linear-gradient(
+      15deg,
+      var(--main-color-blue) 0%,
+      rgba(244, 245, 246, 0) 90%
+    );
   }
 </style>

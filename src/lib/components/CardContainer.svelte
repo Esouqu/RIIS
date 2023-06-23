@@ -20,8 +20,8 @@
     gap: var(--cc-gap, 5px);
     width: var(--cc-width, auto);
     padding: var(--cc-p, 10px);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-    background-color: var(--main-color-gray);
+    box-shadow: var(--box-shadow-options);
+    background-color: var(--bg-color);
     transition: 0.2s;
 
     & span {

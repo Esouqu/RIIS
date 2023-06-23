@@ -94,8 +94,7 @@
           <p>
             {#each currentLevelDescription as { text, title, description }}
               {#if description && title}
-                <span style="color: var(--main-color-blue);">{description}</span
-                >
+                <span style="color: var(--rarity-color-3);">{description}</span>
               {:else}
                 {text}
               {/if}
@@ -137,7 +136,7 @@
     &__image {
       position: relative;
       display: flex;
-      box-shadow: 0 2px 4px black;
+      box-shadow: 0 2px 4px #0f0f0f;
       width: 90px;
       height: 90px;
     }
@@ -179,14 +178,12 @@
 
       & p {
         margin: 0;
+      }
 
+      & p:not(:last-child) {
         &::after {
           content: "•";
           padding: 0 5px;
-        }
-
-        &:last-child::after {
-          content: "";
         }
       }
 
