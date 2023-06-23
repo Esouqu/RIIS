@@ -48,23 +48,24 @@
 
       &.active {
         border-left: 4px solid #0ea5e9;
-        color: var(--main-color-white);
-        background-color: var(--main-color-blue);
+        color: #f4f5f6;
+        background-color: var(--rarity-color-3);
 
         & a {
+          color: #f4f5f6;
           cursor: default;
         }
       }
 
       &:hover:not(.active) {
-        background-color: var(--bg-color-white-50);
+        background-color: var(--bg-sub-accent-color-30);
       }
 
       & a {
         width: 100%;
         padding: 0 20px;
         text-decoration: none;
-        color: var(--text-color-black);
+        color: var(--text-color);
         transition: 0.1s;
       }
     }

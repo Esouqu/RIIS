@@ -27,7 +27,7 @@
     height: 100%;
     padding: 5px;
     border: 0;
-    background-color: var(--main-color-ultra-white);
+    background-color: var(--bg-accent-color);
     opacity: 0.4;
     transition: 0.3s;
     cursor: pointer;
@@ -37,11 +37,11 @@
     }
 
     &.selected {
-      background-color: var(--main-color-blue);
+      background-color: var(--rarity-color-3);
       opacity: 1;
 
       & img {
-        filter: invert(0);
+        filter: invert(var(--img-invert));
       }
     }
   }
@@ -50,7 +50,7 @@
 
     & img {
       width: 100%;
-      filter: invert(1);
+      filter: invert(var(--img-invert));
     }
   }
 </style>

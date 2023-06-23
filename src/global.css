@@ -1,45 +1,64 @@
 @import url('https://fonts.googleapis.com/css2?family=Overpass:wght@200;300;400;500;600;700;800;900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700;800&display=swap');
 
-:root {
-  --main-color-black: #0f0f0f;
-  --main-color-white: #f4f5f6;
-  --main-color-ultra-white: #ffffff;
-  --main-color-gray: #ececec;
-  --main-color-blue: #22bbff;
-  --sub-color-gray: #bfbfbf;
-  --rarity-color-orange: #f97316;
-  --rarity-color-yellow: #facc15;
-  --rarity-color-lightpurple: #c4b5fd;
-  --rarity-color-lightgreen: #bef264;
-  --bg-color-white-50: #f4f5f650;
-  --bg-gradient-center: linear-gradient(90deg,
-      var(--main-color-gray) 0%,
-      var(--main-color-ultra-white) 44.27%,
-      var(--main-color-ultra-white) 57.81%,
-      var(--main-color-gray) 100%);
-  --bg-gradient-left: linear-gradient(90deg,
-      var(--main-color-ultra-white) 0%,
-      var(--main-color-gray) 100%);
-  --bg-gradient-right: linear-gradient(270deg,
-      var(--main-color-ultra-white) 0%,
-      var(--main-color-gray) 100%);
-  --bg-gradient-top: linear-gradient(180deg,
-      var(--main-color-ultra-white) 0%,
-      var(--main-color-gray) 100%);
-  --bg-gradient-bottom: linear-gradient(0deg,
-      var(--main-color-ultra-white) 0%,
-      var(--main-color-gray) 100%);
-}
-
 body {
   font-family: 'Overpass', sans-serif;
-  color: var(--main-color-black);
-  background-image: url('$lib/assets/bg.light.jpg');
+  color: var(--text-color);
+  background-image: var(--bg-image);
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: cover;
+  transition: .2s;
   overflow: hidden;
+
+  --rarity-color-6: #f97316;
+  --rarity-color-5: #facc15;
+  --rarity-color-4: #c4b5fd;
+  --rarity-color-3: #22bbff;
+  --rarity-color-2: #bef264;
+  --rarity-color-1: #bfbfbf;
+
+  --text-color: #0f0f0f;
+  --bg-color: #ececec;
+  --bg-accent-color: #ffffff;
+  --bg-sub-color: #bfbfbf;
+  --bg-sub-accent-color: #f4f5f6;
+  --bg-sub-accent-color-30: #f4f5f64d;
+  --bg-second-color: #666666;
+  --img-invert: 1;
+  --box-shadow-options: 0 2px 4px rgba(0, 0, 0, 0.3);
+  --bg-image: url('$lib/assets/bg.light.jpg');
+
+  --bg-gradient-center: linear-gradient(90deg,
+      var(--bg-color) 0%,
+      var(--bg-accent-color) 45%,
+      var(--bg-accent-color) 55%,
+      var(--bg-color) 100%);
+  --bg-gradient-left: linear-gradient(90deg,
+      var(--bg-accent-color) 0%,
+      var(--bg-color) 100%);
+  --bg-gradient-right: linear-gradient(270deg,
+      var(--bg-accent-color) 0%,
+      var(--bg-color) 100%);
+  --bg-gradient-top: linear-gradient(180deg,
+      var(--bg-accent-color) 0%,
+      var(--bg-color) 100%);
+  --bg-gradient-bottom: linear-gradient(0deg,
+      var(--bg-accent-color) 0%,
+      var(--bg-color) 100%);
+}
+
+body.dark-theme {
+  --text-color: #f4f5f6;
+  --bg-color: #191920;
+  --bg-accent-color: #353543;
+  --bg-sub-color: #262626;
+  --bg-sub-accent-color: #484855;
+  --bg-sub-accent-color-30: #7878781f;
+  --bg-second-color: #666666;
+  --img-invert: 0;
+  --box-shadow-options: 0 2px 4px rgba(255, 255, 255, 0.15);
+  --bg-image: url('$lib/assets/bg.dark.jpg');
 }
 
 ::-webkit-scrollbar {
@@ -47,17 +66,15 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--main-color-ultra-white);
+  /* background: var(--bg-accent-color); */
+  background: #ffffff;
 }
 
 ::-webkit-scrollbar-thumb {
-  /* background-color: var(--main-color-orange); */
   transition: .2s;
-  /* background: rgb(121, 121, 121); */
-  background: var(--main-color-blue);
+  background: var(--rarity-color-3);
 }
 
 ::-webkit-scrollbar-thumb:hover {
   background-color: #198abb;
-  /* background-color: rgb(94, 94, 94); */
 }

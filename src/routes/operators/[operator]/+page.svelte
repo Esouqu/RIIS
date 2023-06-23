@@ -171,8 +171,9 @@
     display: flex;
     justify-content: center;
     padding: 20px;
-    background-color: #f4f5f6;
-    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.25);
+    background-color: var(--bg-sub-accent-color);
+    box-shadow: var(--box-shadow-options);
+    transition: 0.2s;
 
     &-inner-wrapper {
       display: flex;
@@ -201,7 +202,8 @@
 
     & img {
       width: 100%;
-      filter: invert(1);
+      filter: invert(var(--img-invert));
+      transition: 0.2s;
     }
   }
   .stars-wrapper {

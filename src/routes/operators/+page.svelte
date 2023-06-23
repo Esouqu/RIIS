@@ -154,7 +154,7 @@
       height: 2px;
       margin: 0 auto;
       opacity: 0.3;
-      background-color: var(--main-color-black);
+      background-color: var(--bg-sub-accent-color);
     }
 
     & input {
@@ -164,10 +164,12 @@
       border: 0;
       font-size: 18px;
       font-weight: 500;
+      color: var(--text-color);
       background-color: unset;
 
       &::placeholder {
-        color: #0f0f0f50;
+        opacity: 0.5;
+        color: var(--text-color);
       }
 
       &:focus {
