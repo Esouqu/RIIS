@@ -111,13 +111,13 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 40px;
+      height: 35px;
       padding: 0 10px;
       transition: 0.2s;
 
       & h2 {
         margin: 0;
-        font-size: var(--fontSize, 22px);
+        font-size: var(--tl-fontSize, 20px);
         line-height: 100%;
         text-transform: capitalize;
       }
@@ -153,7 +153,7 @@
       display: flex;
       align-items: center;
       gap: 20px;
-      padding: 20px;
+      padding: 15px 20px;
       transition: 0.2s;
 
       & p {

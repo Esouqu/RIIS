@@ -28,8 +28,8 @@
 
     &::-webkit-slider-thumb {
       appearance: none;
-      width: 30px;
-      height: 30px;
+      width: 27px;
+      height: 27px;
       transform: rotate(45deg);
       box-shadow: 0 0 5px black;
       background-color: white;

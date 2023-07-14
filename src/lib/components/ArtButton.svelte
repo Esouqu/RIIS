@@ -22,8 +22,8 @@
     position: relative;
     display: flex;
     align-items: center;
-    width: 70px;
-    height: 70px;
+    width: 60px;
+    height: 60px;
     padding: var(--p, 0);
     border: 0;
     background-color: var(--bg-color);

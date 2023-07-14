@@ -122,7 +122,6 @@
             <div class="talents-wrapper">
               {#each operator.talents as talent, idx}
                 <TalentCard
-                  --fontSize={"20px"}
                   title={talent.name}
                   titlePosition={"left"}
                   titleGradient={"left"}

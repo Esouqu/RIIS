@@ -12,12 +12,9 @@
 
 <nav>
   <ul class="nav-list">
-    {#each pages as currentPage}
-      <li
-        class="nav-list__item"
-        class:active={$page.route.id === currentPage.path}
-      >
-        <a href={currentPage.path}>{currentPage.name}</a>
+    {#each pages as { name, path }}
+      <li class="nav-list__item" class:active={$page.route.id === path}>
+        <a href={path}>{name}</a>
       </li>
     {/each}
   </ul>

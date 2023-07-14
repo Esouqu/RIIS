@@ -18,15 +18,14 @@
 
   let selectedTab: number = 0;
   let sliderValue = 1;
-  let flyDirection = 0;
 
   $: allLevels = skills[selectedTab].levels;
   $: currentLevel = allLevels[Math.round(sliderValue) - 1];
   $: rangeList = currentLevel.range;
   $: currentLevelDescription = replaceTextTags(currentLevel.description);
   $: detailsList = [
-    { title: "SpCost", value: String(currentLevel.spCost) },
-    { title: "InitSp", value: String(currentLevel.initSp) },
+    { title: "SP Cost", value: String(currentLevel.spCost) },
+    { title: "Initial SP", value: String(currentLevel.initSp) },
     { title: "Duration", value: currentLevel.duration },
   ];
 
@@ -188,12 +187,15 @@
       }
 
       & [data-chargeType="Offensive Recovery"] {
+        padding: 0 5px;
         background-color: crimson;
       }
       & [data-chargeType="Defensive Recovery"] {
+        padding: 0 5px;
         background-color: orange;
       }
       & [data-chargeType="Per Second Recovery"] {
+        padding: 0 5px;
         background-color: limegreen;
       }
     }
@@ -203,7 +205,7 @@
       align-items: center;
       flex-direction: row;
       gap: 12px;
-      padding: 20px;
+      padding: 20px 30px;
       background-color: var(--main-color-gray);
     }
     &__description {

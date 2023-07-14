@@ -24,8 +24,8 @@
     align-items: var(--cont-align, center);
     gap: var(--cont-gap, 0);
     box-sizing: border-box;
-    width: 100%;
-    height: 100%;
+    width: var(--cont-w, 100%);
+    height: var(--cont-h, 100%);
     padding: var(--cont-p, var(--cont-py, 0px) var(--cont-px, 0px));
     outline: 2px solid var(--bg-sub-color);
     outline-offset: -2px;

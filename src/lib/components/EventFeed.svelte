@@ -7,55 +7,58 @@
 
   export let eventsData: Array<EventPost>;
 
-  let hoveredArticle: string | null = null;
+  let hoveredArticle: number | null = null;
 </script>
 
-<div>
-  {#each eventsData as event, idx}
-    <Container
-      --px={"30px"}
-      --py={"20px"}
-      htmlTag="article"
-      id={formatLink(event.title)}
-      isHovered={hoveredArticle === event.title}
-      on:mouseleave={() => (hoveredArticle = null)}
-      on:mouseenter={() => (hoveredArticle = event.title)}
-    >
-      <div class="top-wrapper">
-        <div class="title-wrapper">
-          <div>{event.type}</div>
-          <h2>{event.title}</h2>
-        </div>
-        <span class="date">{event.startTime}</span>
+<!-- <div> -->
+{#each eventsData as event, idx}
+  <Container
+    --cont-px={"30px"}
+    --cont-py={"20px"}
+    --cont-h={"auto"}
+    --cont-align={"normal"}
+    htmlTag="article"
+    id={formatLink(event.title)}
+    isHovered={hoveredArticle === idx}
+    on:mouseleave={() => (hoveredArticle = null)}
+    on:mouseenter={() => (hoveredArticle = idx)}
+  >
+    <div class="top-wrapper">
+      <div class="title-wrapper">
+        <div>{event.type}</div>
+        <h2>{event.title}</h2>
       </div>
-      <span class="line" />
-      {#if idx === 0}
-        <div class="image-wrapper">
-          <img src={event.imageUrl} alt="" />
-        </div>
-      {:else}
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima,
-          magnam, aliquid nemo nostrum veniam suscipit provident reiciendis
-          corporis ut cumque sequi recusandae non iusto autem modi ipsam facere
-          cum. Molestias adipisci rem obcaecati laudantium, facilis hic
-          exercitationem eligendi nam voluptas!
-        </p>
-      {/if}
-      {#if hoveredArticle === event.title}
-        <div
-          class="button-wrapper"
-          transition:slide={{
-            duration: 100,
-            easing: linear,
-          }}
-        >
-          <button>READ MORE+</button>
-        </div>
-      {/if}
-    </Container>
-  {/each}
-</div>
+      <span class="date">{event.startTime}</span>
+    </div>
+    <span class="line" />
+    {#if idx === 0}
+      <div class="image-wrapper">
+        <img src={event.imageUrl} alt="" />
+      </div>
+    {:else}
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima,
+        magnam, aliquid nemo nostrum veniam suscipit provident reiciendis
+        corporis ut cumque sequi recusandae non iusto autem modi ipsam facere
+        cum. Molestias adipisci rem obcaecati laudantium, facilis hic
+        exercitationem eligendi nam voluptas!
+      </p>
+    {/if}
+    {#if hoveredArticle === idx}
+      <div
+        class="button-wrapper"
+        transition:slide={{
+          duration: 100,
+          easing: linear,
+        }}
+      >
+        <button>READ MORE+</button>
+      </div>
+    {/if}
+  </Container>
+{/each}
+
+<!-- </div> -->
 
 <style lang="scss">
   .top-wrapper {
@@ -105,7 +108,7 @@
     width: 100%;
     height: 2px;
     margin: 10px 0;
-    background-color: var(--main-color-black);
+    background-color: var(--text-color);
   }
   .image-wrapper {
     display: flex;
@@ -126,7 +129,7 @@
       padding: 5px 10px;
       border: none;
       color: white;
-      background-color: var(--main-color-blue);
+      background-color: var(--rarity-color-3);
       transition: 0.2s;
       cursor: pointer;
     }

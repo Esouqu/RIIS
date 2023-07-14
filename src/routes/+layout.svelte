@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import "normalize.css";
   import "../global.css";
   import Footer from "$lib/components/Footer.svelte";
@@ -7,15 +7,11 @@
   import ThemeSwitcher from "$lib/components/ThemeSwitcher.svelte";
   import { isDarkTheme } from "$lib/stores/stores";
 
-  function addDarkTheme() {
+  function handleThemeSwitch() {
     const body = document.querySelector("body");
-    $isDarkTheme = true;
-    body?.classList.add("dark-theme");
-  }
-  function removeDarkTheme() {
-    const body = document.querySelector("body");
-    $isDarkTheme = false;
-    body?.classList.remove("dark-theme");
+
+    $isDarkTheme = !$isDarkTheme;
+    body?.classList.toggle("dark-theme");
   }
 </script>
 
@@ -27,8 +23,7 @@
     </header>
     <ThemeSwitcher
       isDarkTheme={$isDarkTheme}
-      moonClickHandler={() => addDarkTheme()}
-      sunClickHandler={() => removeDarkTheme()}
+      switchHandler={() => handleThemeSwitch()}
     />
     <!-- <Footer /> -->
   </div>
@@ -41,6 +36,10 @@
     display: grid;
     grid-template-columns: 310px 1fr;
     width: calc(100vw - (100vw - 100%));
+    /* display: flex;
+    flex-direction: row; */
+    max-width: 1920px;
+    margin: 0 auto;
   }
   .header-wrapper {
     position: relative;

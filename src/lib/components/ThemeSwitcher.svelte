@@ -3,15 +3,15 @@
   import moon from "$lib/assets/moon.svg";
 
   export let isDarkTheme: boolean = false;
-  export let moonClickHandler: () => void = () => {};
-  export let sunClickHandler: () => void = () => {};
+  export let switchHandler: () => void = () => {};
 </script>
 
-<div class="theme-switcher">
+<form method="POST" class="theme-switcher">
   <button
+    formaction="/?/setTheme&theme=light"
     type="button"
     class="theme-switcher__button"
-    on:click={() => sunClickHandler()}
+    on:click={() => switchHandler()}
   >
     <img src={sun} alt="Sun icon of theme switcher" draggable="false" />
   </button>
@@ -23,13 +23,14 @@
   />
 
   <button
+    formaction="/?/setTheme&theme=dark"
     type="button"
     class="theme-switcher__button"
-    on:click={() => moonClickHandler()}
+    on:click={() => switchHandler()}
   >
     <img src={moon} alt="Moon icon of theme switcher" draggable="false" />
   </button>
-</div>
+</form>
 
 <style lang="scss">
   .theme-switcher {
@@ -47,7 +48,6 @@
     border-radius: 9999px;
     background-color: var(--bg-second-color);
     transition: 0.3s;
-    /* background-color: var(--bg-accent-color); */
 
     &__select-indicator {
       position: absolute;
@@ -55,7 +55,6 @@
       padding: 20px;
       border-radius: 9999px;
       box-shadow: var(--box-shadow-options);
-      /* background-color: var(--bg-color); */
       background-color: #f4f5f6;
       transition: 0.3s;
 
@@ -86,7 +85,6 @@
 
       & img {
         width: 100%;
-        /* filter: invert(var(--img-invert)); */
         filter: invert(1);
       }
     }
