@@ -10,7 +10,6 @@
   let hoveredArticle: number | null = null;
 </script>
 
-<!-- <div> -->
 {#each eventsData as event, idx}
   <Container
     --cont-px={"30px"}
@@ -57,8 +56,6 @@
     {/if}
   </Container>
 {/each}
-
-<!-- </div> -->
 
 <style lang="scss">
   .top-wrapper {

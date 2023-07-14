@@ -5,14 +5,25 @@
   import HomeLogo from "$lib/components/HomeLogo.svelte";
   import Navigation from "$lib/components/Navigation.svelte";
   import ThemeSwitcher from "$lib/components/ThemeSwitcher.svelte";
-  import { isDarkTheme } from "$lib/stores/stores";
+  import { theme } from "$lib/stores/stores";
+  import { onMount } from "svelte";
 
   function handleThemeSwitch() {
     const body = document.querySelector("body");
 
-    $isDarkTheme = !$isDarkTheme;
+    $theme = $theme === "light" ? "dark" : "light";
     body?.classList.toggle("dark-theme");
   }
+
+  onMount(() => {
+    const body = document.querySelector("body");
+
+    if ($theme === "light") {
+      body?.classList.remove("dark-theme");
+    } else {
+      body?.classList.add("dark-theme");
+    }
+  });
 </script>
 
 <div class="wrapper">
@@ -21,10 +32,7 @@
     <header class="header">
       <Navigation />
     </header>
-    <ThemeSwitcher
-      isDarkTheme={$isDarkTheme}
-      switchHandler={() => handleThemeSwitch()}
-    />
+    <ThemeSwitcher theme={$theme} switchHandler={() => handleThemeSwitch()} />
     <!-- <Footer /> -->
   </div>
 
