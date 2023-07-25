@@ -154,7 +154,7 @@
       height: 2px;
       margin: 0 auto;
       opacity: 0.3;
-      background-color: var(--bg-sub-accent-color);
+      background-color: var(--text-color);
     }
 
     & input {

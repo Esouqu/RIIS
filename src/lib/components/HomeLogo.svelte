@@ -1,28 +1,27 @@
 <script lang="ts">
-  import logo from '../assets/logo.png'
+  import logo from "../assets/logo.png";
 </script>
 
-<div class="image-wrapper">
+<div class="logo">
   <a href="/">
-    <img src={logo} class="image" alt="rhodes logo" />
+    <img src={logo} class="logo__icon" alt="rhodes logo" />
   </a>
 </div>
 
 <style lang="scss">
-  .image-wrapper {
+  .logo {
     position: absolute;
     top: 0;
     display: flex;
-    width: 250px;
-  }
-  .image {
-    width: 100%;
-    filter: invert(1);
-    transition: .1s linear;
 
-    &:hover {
-      filter: invert(1) drop-shadow(0px 4px 6px white);
-      transform: scale(1.025);
+    &__icon {
+      width: 100%;
+      filter: invert(var(--img-invert));
+      transition: 0.2s;
+
+      &:hover {
+        transform: scale(1.025);
+      }
     }
   }
 </style>

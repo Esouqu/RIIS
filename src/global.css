@@ -25,6 +25,7 @@ body {
   --bg-sub-accent-color: #f4f5f6;
   --bg-sub-accent-color-30: #f4f5f64d;
   --bg-second-color: #666666;
+  --hover-color: #a2bad475;
   --img-invert: 1;
   --box-shadow-options: 0 2px 4px rgba(0, 0, 0, 0.3);
   --bg-image: url('$lib/assets/bg.light.jpg');
@@ -56,6 +57,7 @@ body.dark-theme {
   --bg-sub-accent-color: #484855;
   --bg-sub-accent-color-30: #7878781f;
   --bg-second-color: #666666;
+  --hover-color: #34414fa1;
   --img-invert: 0;
   --box-shadow-options: 0 2px 4px rgba(255, 255, 255, 0.15);
   --bg-image: url('$lib/assets/bg.dark.jpg');

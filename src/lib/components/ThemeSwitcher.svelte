@@ -7,52 +7,47 @@
   export let switchHandler: () => void = () => {};
 </script>
 
-<div class="theme-switcher">
-  <button type="button" on:click={() => switchHandler()}>
-    {#if theme === "dark"}
-      <img
-        src={sun}
-        alt="Sun Icon"
-        transition:scale={{ duration: 200 }}
-        draggable="false"
-      />
-    {:else}
-      <img
-        src={moon}
-        alt="Moon Icon"
-        transition:scale={{ duration: 200 }}
-        draggable="false"
-      />
-    {/if}
-  </button>
-</div>
+<button class="theme-switcher" type="button" on:click={() => switchHandler()}>
+  {#if theme === "dark"}
+    <img
+      src={sun}
+      alt="Sun Icon"
+      transition:scale={{ duration: 200 }}
+      draggable="false"
+    />
+  {:else}
+    <img
+      src={moon}
+      alt="Moon Icon"
+      transition:scale={{ duration: 200 }}
+      draggable="false"
+    />
+  {/if}
+</button>
 
 <style lang="scss">
   .theme-switcher {
-    position: absolute;
-    bottom: 50px;
-    left: 0;
-    right: 0;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    height: 50px;
+    padding: 0px;
+    margin: 0 auto;
+    border: none;
+    border-radius: 100%;
+    background-color: unset;
+    transition: 0.2s;
+    cursor: pointer;
 
-    & button {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 40px;
-      height: 40px;
-      margin: 0 auto;
-      border: none;
-      border-radius: 9999px;
-      background-color: unset;
-      transition: 0.2s;
-
-      &:hover {
-        background-color: var(--bg-sub-accent-color-30);
-      }
+    &:hover {
+      background-color: var(--hover-color);
     }
 
     & img {
       position: absolute;
+      width: 25px;
     }
   }
 </style>
