@@ -28,7 +28,7 @@ body {
   --hover-color: #a2bad475;
   --img-invert: 1;
   --box-shadow-options: 0 2px 4px rgba(0, 0, 0, 0.3);
-  --bg-image: url('./src/lib/assets/bg.light.jpg');
+  --bg-image: url('/bg.light.jpg');
 
   --bg-gradient-center: linear-gradient(90deg,
       var(--bg-color) 0%,
@@ -60,7 +60,7 @@ body.dark-theme {
   --hover-color: #34414fa1;
   --img-invert: 0;
   --box-shadow-options: 0 2px 4px rgba(255, 255, 255, 0.15);
-  --bg-image: url('./src/lib/assets/bg.dark.jpg');
+  --bg-image: url('/bg.dark.jpg');
 }
 
 ::-webkit-scrollbar {
