@@ -33,6 +33,8 @@
   .operator-portrait {
     position: relative;
     display: flex;
+    justify-content: center;
+    align-items: center;
     width: 90px;
     height: 100%;
     box-shadow: var(--box-shadow-options);
@@ -96,7 +98,7 @@
       position: absolute;
       bottom: 0;
       display: none;
-      width: 100%;
+      min-width: 100%;
       text-align: center;
       background-color: var(--bg-color);
     }

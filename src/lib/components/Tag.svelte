@@ -40,7 +40,7 @@
     }
 
     &_selectable {
-      opacity: 0.4;
+      opacity: 0.5;
       user-select: none;
       cursor: pointer;
 
@@ -51,7 +51,7 @@
       }
 
       &:hover {
-        opacity: 0.7;
+        opacity: 0.8;
       }
     }
   }

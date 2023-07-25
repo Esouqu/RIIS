@@ -48,10 +48,9 @@
     flex-direction: column;
     padding: 0;
     margin: 0;
-    font-size: 14px;
-    line-height: 18px;
-    font-weight: 500;
-    font-family: "JetBrains Mono", sans-serif;
+    line-height: 1;
+    font-size: 12.8px;
+    font-weight: 600;
     user-select: none;
 
     &__item {

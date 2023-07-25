@@ -8,6 +8,7 @@ body {
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: cover;
+  background-color: var(--bg-color);
   transition: .2s;
   overflow: hidden;
 
@@ -59,7 +60,7 @@ body.dark-theme {
   --bg-second-color: #666666;
   --hover-color: #34414fa1;
   --img-invert: 0;
-  --box-shadow-options: 0 2px 4px rgba(255, 255, 255, 0.15);
+  /* --box-shadow-options: 0 2px 4px rgba(255, 255, 255, 0.15); */
   --bg-image: url('/bg.dark.jpg');
 }
 

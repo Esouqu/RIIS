@@ -188,7 +188,8 @@
 
     & h1 {
       margin: 0;
-      font-size: 36px;
+      font-size: 31.25px;
+      line-height: 1;
       font-weight: 600;
       text-transform: uppercase;
     }
@@ -209,7 +210,6 @@
   .stars-wrapper {
     display: flex;
     flex-direction: row;
-    margin-top: -5px;
 
     & .star {
       margin-right: -7px;
