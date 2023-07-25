@@ -14,6 +14,10 @@
     top: 0;
     display: flex;
 
+    & a {
+      display: flex;
+    }
+
     &__icon {
       width: 100%;
       filter: invert(var(--img-invert));

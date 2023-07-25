@@ -107,15 +107,12 @@
 </main>
 
 <style lang="scss">
-  .main {
-    margin: 10px;
-  }
   .scroll-container {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 40px;
-    height: calc(100vh - 60px);
+    height: calc(100vh - 40px);
     padding: 20px;
     overflow-y: auto;
   }

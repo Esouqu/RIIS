@@ -146,11 +146,11 @@
   .main {
     display: grid;
     grid-template-columns: 1fr auto;
+    gap: 20px;
     height: 100vh;
     overflow: hidden;
   }
   .section {
-    margin: 10px;
     overflow: hidden;
 
     &_info {
@@ -189,6 +189,7 @@
     & h1 {
       margin: 0;
       font-size: 36px;
+      font-weight: 600;
       text-transform: uppercase;
     }
   }

@@ -166,7 +166,8 @@
       width: 100%;
 
       & h2 {
-        font-size: 18px;
+        font-size: 20px;
+        font-weight: 500;
         margin: 0;
       }
     }
@@ -213,7 +214,6 @@
       flex: 1 1 0;
       align-items: center;
       font-size: 16px;
-      font-weight: 500;
       white-space: pre-wrap;
 
       & p {
@@ -246,7 +246,7 @@
         margin: 0;
 
         &:first-child {
-          font-weight: 600;
+          font-weight: 500;
         }
       }
     }

@@ -85,7 +85,7 @@
     {#if withIcon}
       <div class="subclass-image-wrapper">
         <img
-          src={`/src/lib/assets/subclasses/sub_${iconUrl}_icon.png`}
+          src={`https://raw.githubusercontent.com/Aceship/Arknight-Images/main/ui/subclass/sub_${iconUrl}_icon.png`}
           alt=""
         />
       </div>
@@ -118,6 +118,7 @@
       & h2 {
         margin: 0;
         font-size: var(--tl-fontSize, 20px);
+        font-weight: 500;
         line-height: 100%;
         text-transform: capitalize;
       }

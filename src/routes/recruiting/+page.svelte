@@ -163,9 +163,6 @@
 </main>
 
 <style lang="scss">
-  .main {
-    margin: 10px;
-  }
   .tags-wrapper {
     display: flex;
     flex-wrap: wrap;
@@ -183,7 +180,7 @@
     align-items: center;
     gap: 40px;
     width: calc(100% - 40px);
-    height: calc(100vh - 60px);
+    height: calc(100vh - 40px);
     padding: 20px;
     overflow-y: auto;
   }

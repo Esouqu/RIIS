@@ -27,8 +27,8 @@
     width: var(--cont-w, 100%);
     height: var(--cont-h, 100%);
     padding: var(--cont-p, var(--cont-py, 0px) var(--cont-px, 0px));
-    outline: 2px solid var(--bg-sub-color);
-    outline-offset: -2px;
+    /* outline: 2px solid var(--bg-sub-color);
+    outline-offset: -2px; */
     background-color: var(--bg-sub-accent-color-30);
     transition: 0.2s;
     overflow-y: var(--cont-overflow, hidden);
@@ -41,7 +41,7 @@
       bottom: 0;
     }
 
-    &.hovered {
+    /* &.hovered {
       outline: 2px solid #f4f5f650;
       background-image: linear-gradient(
         0deg,
@@ -49,7 +49,6 @@
         #f4f5f600 83.05%
       );
       cursor: pointer;
-      /* background-color: var(--main-color-white); */
-    }
+    } */
   }
 </style>

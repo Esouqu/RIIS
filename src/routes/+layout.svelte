@@ -1,9 +1,8 @@
 <script lang="ts">
   import "normalize.css";
-  import "../global.css";
+  // import "../global.css";
   import arrowRight from "$lib/assets/ArrowRight.png";
   import arrowLeft from "$lib/assets/ArrowLeft.png";
-  import Footer from "$lib/components/Footer.svelte";
   import HomeLogo from "$lib/components/HomeLogo.svelte";
   import Navigation from "$lib/components/Navigation.svelte";
   import ThemeSwitcher from "$lib/components/ThemeSwitcher.svelte";
@@ -12,7 +11,6 @@
   import { scale } from "svelte/transition";
 
   $: isSidebarExtended = JSON.parse($sidebar);
-  $: console.log(isSidebarExtended);
 
   function handleSidebar() {
     $sidebar = isSidebarExtended ? "false" : "true";
@@ -98,7 +96,6 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 20px;
 
     &__button {
       display: flex;
@@ -110,6 +107,7 @@
       border: 0;
       border-radius: 100%;
       background-color: unset;
+      transition: 0.2s;
       cursor: pointer;
 
       &:hover {
