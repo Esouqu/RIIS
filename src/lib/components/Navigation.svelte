@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { goto } from "$app/navigation";
   import { page } from "$app/stores";
   import event from "$lib/assets/navigation icons/Event_icon.webp";
   import headhunt from "$lib/assets/navigation icons/Headhunt_icon.webp";
@@ -10,7 +11,7 @@
   const pages = [
     { name: "Events", path: "/", icon: event },
     { name: "Operators", path: "/operators", icon: operator },
-    { name: "Recruiting", path: "/recruiting", icon: recruit },
+    { name: "Recruitment", path: "/recruitment", icon: recruit },
     { name: "Headhunt", path: "/headhunt", icon: headhunt },
     { name: "Store", path: "/store", icon: store },
   ];
@@ -23,17 +24,17 @@
         class="nav-list__item"
         class:active={$page.route.id === path}
         class:extended={isExtended}
+        on:click={() => goto(path)}
+        on:keydown={() => goto(path)}
       >
-        <a href={path} draggable="false">
-          <div class="nav-list__icon">
-            <img src={icon} alt={`${name} icon`} draggable="false" />
-          </div>
-          {#if isExtended}
-            <span class="nav-list__name">
-              {name}
-            </span>
-          {/if}
-        </a>
+        <div class="nav-list__icon">
+          <img src={icon} alt={`${name} icon`} draggable="false" />
+        </div>
+        {#if isExtended}
+          <span class="nav-list__name">
+            {name}
+          </span>
+        {/if}
       </li>
     {/each}
   </ul>
@@ -56,8 +57,12 @@
     &__item {
       position: relative;
       display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
       padding: 10px 20px;
       text-transform: uppercase;
+      color: var(--text-color);
       transition: 0.2s;
       cursor: pointer;
 
@@ -68,6 +73,7 @@
       &.active {
         color: #f4f5f6;
         background-color: var(--rarity-color-3);
+        cursor: default;
 
         &::before {
           content: "";
@@ -79,11 +85,6 @@
           background-color: #0ea5e9;
         }
 
-        & a {
-          color: #f4f5f6;
-          cursor: default;
-        }
-
         & img {
           filter: invert(var(--text-color));
         }
@@ -91,17 +92,6 @@
 
       &:hover:not(.active) {
         background-color: var(--hover-color);
-      }
-
-      & a {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        width: 100%;
-        text-decoration: none;
-        color: var(--text-color);
-        transition: 0.1s;
       }
     }
 

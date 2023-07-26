@@ -10,3 +10,4 @@ vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 todo.txt
 prisma/seed.ts
+prisma/seed_functions

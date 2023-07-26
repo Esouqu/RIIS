@@ -1,10 +1,11 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  import { fade, slide } from "svelte/transition";
+  import { fade } from "svelte/transition";
   import { page } from "$app/stores";
   import type {
     Art,
     Operator,
+    Range,
     RangeCell,
     Skill,
     SkillLevel,
@@ -23,20 +24,21 @@
   import Tag from "$lib/components/Tag.svelte";
 
   interface IOperatorConnects {
-    artList: Array<Art>;
+    artList: Art[];
     skills: Array<
       Skill & {
         levels: Array<
           SkillLevel & {
-            range: Array<RangeCell>;
+            range: Range & {
+              grid: RangeCell[];
+            };
           }
         >;
       }
     >;
     talents: Array<
       Talent & {
-        levels: Array<TalentLevel>;
-        range: Array<RangeCell>;
+        levels: TalentLevel[];
       }
     >;
   }
@@ -49,7 +51,10 @@
 
     await fetchWithType<Operator & IOperatorConnects>(
       `/api/operators/${$page.params.operator}`
-    ).then((data) => (operator = data));
+    ).then((data) => {
+      operator = data;
+      console.log(data);
+    });
 
     isLoading = false;
   });
@@ -188,7 +193,7 @@
 
     & h1 {
       margin: 0;
-      font-size: 31.25px;
+      font-size: 39.09px;
       line-height: 1;
       font-weight: 600;
       text-transform: uppercase;

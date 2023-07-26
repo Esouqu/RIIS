@@ -1,6 +1,5 @@
 <script lang="ts">
   import "normalize.css";
-  // import "../global.css";
   import arrowRight from "$lib/assets/ArrowRight.png";
   import arrowLeft from "$lib/assets/ArrowLeft.png";
   import HomeLogo from "$lib/components/HomeLogo.svelte";

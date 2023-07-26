@@ -10,12 +10,12 @@
 
   const MAX_SELECTED_TAGS = 5;
 
-  let operators: Array<Operator> = [];
+  let operators: Operator[] = [];
   let isOperatorsLoading = true;
-  let selectedTags: Array<string> = [];
+  let selectedTags: string[] = [];
 
   onMount(async () => {
-    await fetchWithType<Array<Operator>>(`/api/recruiting`).then(
+    await fetchWithType<Operator[]>(`/api/recruiting`).then(
       (data) => (operators = data)
     );
 
@@ -30,7 +30,7 @@
     }
   }
 
-  function getAllTagConnections(tags: Array<string>): Array<Array<string>> {
+  function getAllTagConnections(tags: string[]): string[][] {
     const tagConnections: Array<Array<string>> = [[]];
 
     tags.forEach((tag) => {
@@ -45,9 +45,9 @@
   }
 
   function getMatchingOperators(
-    operators: Array<Operator>,
-    tags: Array<string>
-  ): Array<Operator> {
+    operators: Operator[],
+    tags: string[]
+  ): Operator[] {
     const rarityToTags: { [key: number]: string } = {
       1: "Starter",
       4: "Senior Operator",
@@ -93,7 +93,9 @@
     .sort((a, b) => b.lowestRarity - a.lowestRarity);
 </script>
 
-<svelte:head><title>Recruiting</title></svelte:head>
+<svelte:head>
+  <title>Recruitment</title>
+</svelte:head>
 
 <main class="main">
   <Container --cont-justify={"start"}>
@@ -124,7 +126,7 @@
         </div>
         <div class="grid">
           {#if variants.length < 1}
-            {#each operators as { name, rarity, id, portraitUrl }, idx}
+            {#each operators as { id, name, rarity, portraitUrl }, idx}
               <OperatorPortrait
                 {name}
                 {rarity}
@@ -143,7 +145,7 @@
                   <div
                     style="display: flex; flex-wrap: wrap; justify-content: center; gap: 5px;"
                   >
-                    {#each matchingOperators as { name, rarity, id, portraitUrl }}
+                    {#each matchingOperators as { id, name, rarity, portraitUrl }}
                       <OperatorPortrait
                         {name}
                         {rarity}
@@ -179,9 +181,8 @@
     flex-direction: column;
     align-items: center;
     gap: 40px;
-    width: calc(100% - 40px);
     height: calc(100vh - 40px);
-    padding: 20px;
+    padding: 20px 40px;
     overflow-y: auto;
   }
   .variant-wrapper {

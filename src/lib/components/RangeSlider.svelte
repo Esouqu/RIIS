@@ -34,7 +34,6 @@
       box-shadow: 0 0 5px black;
       background-color: white;
       background-size: contain;
-      transition: 0.3s;
       cursor: pointer;
     }
 
