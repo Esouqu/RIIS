@@ -201,7 +201,7 @@
   .clear-button {
     padding: 5px 10px;
     border: 0;
-    color: var(--main-color-white);
+    color: #f4f5f6;
     background-color: crimson;
     transition: 0.2s;
     user-select: none;

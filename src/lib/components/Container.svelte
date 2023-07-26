@@ -30,7 +30,6 @@
     /* outline: 2px solid var(--bg-sub-color);
     outline-offset: -2px; */
     background-color: var(--bg-sub-accent-color-30);
-    transition: 0.2s;
     overflow-y: var(--cont-overflow, hidden);
     overflow-x: hidden;
 
@@ -40,15 +39,5 @@
       right: 0;
       bottom: 0;
     }
-
-    /* &.hovered {
-      outline: 2px solid #f4f5f650;
-      background-image: linear-gradient(
-        0deg,
-        var(--bg-sub-accent-color) 0%,
-        #f4f5f600 83.05%
-      );
-      cursor: pointer;
-    } */
   }
 </style>

@@ -26,7 +26,6 @@
     padding: 5px;
     box-shadow: var(--box-shadow-options);
     background-color: var(--bg-accent-color);
-    transition: 0.2s;
     opacity: 1;
 
     & span {
@@ -36,7 +35,6 @@
     & img {
       height: 100%;
       filter: invert(var(--img-invert));
-      transition: 0.2s;
     }
 
     &_selectable {

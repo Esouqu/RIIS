@@ -113,7 +113,6 @@
       align-items: center;
       height: 35px;
       padding: 0 10px;
-      transition: 0.2s;
 
       & h2 {
         margin: 0;
@@ -155,7 +154,6 @@
       align-items: center;
       gap: 20px;
       padding: 15px 20px;
-      transition: 0.2s;
 
       & p {
         margin: 0;
@@ -179,6 +177,7 @@
       width: 100%;
       padding: 0 100px;
       filter: invert(var(--img-invert));
+      transition: 0.2s;
     }
   }
 </style>

@@ -177,7 +177,6 @@
     padding: 20px;
     background-color: var(--bg-sub-accent-color);
     box-shadow: var(--box-shadow-options);
-    transition: 0.2s;
 
     &-inner-wrapper {
       display: flex;

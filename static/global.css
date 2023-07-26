@@ -9,7 +9,6 @@ body {
   background-attachment: fixed;
   background-size: cover;
   background-color: var(--bg-color);
-  transition: .2s;
   overflow: hidden;
 
   --rarity-color-6: #f97316;
