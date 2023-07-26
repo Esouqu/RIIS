@@ -85,7 +85,7 @@
     {#if withIcon}
       <div class="subclass-image-wrapper">
         <img
-          src={`/src/lib/assets/subclasses/sub_${iconUrl}_icon.png`}
+          src={`https://raw.githubusercontent.com/Aceship/Arknight-Images/main/ui/subclass/sub_${iconUrl}_icon.png`}
           alt=""
         />
       </div>
@@ -111,13 +111,13 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 40px;
+      height: 35px;
       padding: 0 10px;
-      transition: 0.2s;
 
       & h2 {
         margin: 0;
-        font-size: var(--fontSize, 22px);
+        font-size: var(--tl-fontSize, 20px);
+        font-weight: 500;
         line-height: 100%;
         text-transform: capitalize;
       }
@@ -153,8 +153,7 @@
       display: flex;
       align-items: center;
       gap: 20px;
-      padding: 20px;
-      transition: 0.2s;
+      padding: 15px 20px;
 
       & p {
         margin: 0;
@@ -178,6 +177,7 @@
       width: 100%;
       padding: 0 100px;
       filter: invert(var(--img-invert));
+      transition: 0.2s;
     }
   }
 </style>

@@ -1,94 +1,53 @@
 <script lang="ts">
   import sun from "$lib/assets/sun.svg";
   import moon from "$lib/assets/moon.svg";
+  import { scale } from "svelte/transition";
 
-  export let isDarkTheme: boolean = false;
-  export let moonClickHandler: () => void = () => {};
-  export let sunClickHandler: () => void = () => {};
+  export let theme: string = "light";
+  export let switchHandler: () => void = () => {};
 </script>
 
-<div class="theme-switcher">
-  <button
-    type="button"
-    class="theme-switcher__button"
-    on:click={() => sunClickHandler()}
-  >
-    <img src={sun} alt="Sun icon of theme switcher" draggable="false" />
-  </button>
-
-  <span
-    class="theme-switcher__select-indicator"
-    class:dark={isDarkTheme}
-    class:light={!isDarkTheme}
-  />
-
-  <button
-    type="button"
-    class="theme-switcher__button"
-    on:click={() => moonClickHandler()}
-  >
-    <img src={moon} alt="Moon icon of theme switcher" draggable="false" />
-  </button>
-</div>
+<button class="theme-switcher" type="button" on:click={() => switchHandler()}>
+  {#if theme === "dark"}
+    <img
+      src={sun}
+      alt="Sun Icon"
+      transition:scale={{ duration: 200 }}
+      draggable="false"
+    />
+  {:else}
+    <img
+      src={moon}
+      alt="Moon Icon"
+      transition:scale={{ duration: 200 }}
+      draggable="false"
+    />
+  {/if}
+</button>
 
 <style lang="scss">
   .theme-switcher {
-    position: absolute;
-    bottom: 50px;
-    left: 0;
-    right: 0;
+    position: relative;
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
-    width: 100px;
-    height: 30px;
+    width: 50px;
+    height: 50px;
+    padding: 0px;
     margin: 0 auto;
-    border-radius: 9999px;
-    background-color: var(--bg-second-color);
-    transition: 0.3s;
-    /* background-color: var(--bg-accent-color); */
+    border: none;
+    border-radius: 100%;
+    background-color: unset;
+    transition: 0.2s;
+    cursor: pointer;
 
-    &__select-indicator {
-      position: absolute;
-      z-index: 1;
-      padding: 20px;
-      border-radius: 9999px;
-      box-shadow: var(--box-shadow-options);
-      /* background-color: var(--bg-color); */
-      background-color: #f4f5f6;
-      transition: 0.3s;
-
-      &.dark {
-        right: 0;
-      }
-      &.light {
-        left: 0;
-      }
+    &:hover {
+      background-color: var(--hover-color);
     }
 
-    &__button {
+    & img {
       position: absolute;
-      z-index: 2;
-      display: flex;
-      width: 40px;
-      border: unset;
-      background-color: unset;
-      cursor: pointer;
-
-      &:first-child {
-        left: 0;
-      }
-
-      &:last-child {
-        right: 0;
-      }
-
-      & img {
-        width: 100%;
-        /* filter: invert(var(--img-invert)); */
-        filter: invert(1);
-      }
+      width: 25px;
     }
   }
 </style>

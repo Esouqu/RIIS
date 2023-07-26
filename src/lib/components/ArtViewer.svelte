@@ -108,8 +108,8 @@
 <style lang="scss">
   .buttons-wrapper {
     position: absolute;
-    top: 20px;
-    left: 20px;
+    top: 30px;
+    left: 40px;
     display: flex;
     flex-direction: column-reverse;
     gap: 2px;
@@ -139,8 +139,8 @@
   }
   .info-wrapper {
     position: absolute;
-    left: 20px;
-    bottom: 20px;
+    left: 40px;
+    bottom: 30px;
     display: flex;
     gap: 10px;
     /* padding: 10px; */

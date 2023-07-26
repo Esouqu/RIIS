@@ -1,33 +1,37 @@
 <script lang="ts">
-  import { fade, fly, slide } from "svelte/transition";
-  import type { RangeCell, Skill, SkillLevel } from "@prisma/client";
+  import { fade, fly } from "svelte/transition";
+  import type { Range, RangeCell, Skill, SkillLevel } from "@prisma/client";
   import replaceTextTags from "$lib/utils/replaceTextTags";
   import Tab from "./Tab.svelte";
   import RangeSlider from "./RangeSlider.svelte";
   import CardContainer from "./CardContainer.svelte";
+  import RangeGrid from "./RangeGrid.svelte";
 
   export let skills: Array<
     Skill & {
       levels: Array<
         SkillLevel & {
-          range: Array<RangeCell>;
+          range: Range & {
+            grid: RangeCell[];
+          };
         }
       >;
     }
   >;
 
-  let selectedTab: number = 0;
+  let selectedTab = 0;
   let sliderValue = 1;
-  let flyDirection = 0;
 
   $: allLevels = skills[selectedTab].levels;
   $: currentLevel = allLevels[Math.round(sliderValue) - 1];
-  $: rangeList = currentLevel.range;
   $: currentLevelDescription = replaceTextTags(currentLevel.description);
   $: detailsList = [
-    { title: "SpCost", value: String(currentLevel.spCost) },
-    { title: "InitSp", value: String(currentLevel.initSp) },
-    { title: "Duration", value: currentLevel.duration },
+    { title: "SP Cost", value: currentLevel.spCost },
+    { title: "Initial SP", value: currentLevel.initSp },
+    {
+      title: "Duration",
+      value: currentLevel.duration <= 0 ? null : currentLevel.duration,
+    },
   ];
 
   function handleRangeInput(event: Event) {
@@ -103,20 +107,19 @@
         </div>
       {/key}
     {/key}
+    {#if currentLevel.range}
+      <RangeGrid cells={currentLevel.range.grid} />
+    {/if}
   </div>
   <div class="skill-card-details-wrapper">
     {#each detailsList as { title, value }}
-      <div class="skill-card__detail">
-        <p>{title}</p>
-        <p>{value}</p>
-      </div>
+      {#if value !== null}
+        <div class="skill-card__detail">
+          <p>{title}</p>
+          <p>{value}</p>
+        </div>
+      {/if}
     {/each}
-    {#if rangeList.length > 0}
-      <div class="skill-card__detail">
-        <p>Range</p>
-        <p>{rangeList.length}</p>
-      </div>
-    {/if}
   </div>
 </CardContainer>
 
@@ -167,7 +170,8 @@
       width: 100%;
 
       & h2 {
-        font-size: 18px;
+        font-size: 20px;
+        font-weight: 500;
         margin: 0;
       }
     }
@@ -188,30 +192,31 @@
       }
 
       & [data-chargeType="Offensive Recovery"] {
+        padding: 0 5px;
+        color: white;
         background-color: crimson;
       }
       & [data-chargeType="Defensive Recovery"] {
+        padding: 0 5px;
         background-color: orange;
       }
       & [data-chargeType="Per Second Recovery"] {
+        padding: 0 5px;
+        color: #0f0f0f;
         background-color: limegreen;
       }
     }
 
     &-description-wrapper {
       display: flex;
-      align-items: center;
-      flex-direction: row;
-      gap: 12px;
-      padding: 20px;
-      background-color: var(--main-color-gray);
+      gap: 15px;
+      padding: 20px 30px;
     }
     &__description {
       display: flex;
       flex: 1 1 0;
       align-items: center;
       font-size: 16px;
-      font-weight: 500;
       white-space: pre-wrap;
 
       & p {
@@ -230,7 +235,7 @@
       justify-content: center;
       align-items: center;
       width: 100%;
-      padding: 5px 0;
+      padding: 10px 0;
       background-image: var(--bg-gradient-bottom);
 
       &:first-child {
@@ -244,7 +249,7 @@
         margin: 0;
 
         &:first-child {
-          font-weight: 600;
+          font-weight: 500;
         }
       }
     }

@@ -1,36 +1,57 @@
-<script>
+<script lang="ts">
   import "normalize.css";
-  import "../global.css";
-  import Footer from "$lib/components/Footer.svelte";
+  import arrowRight from "$lib/assets/ArrowRight.png";
+  import arrowLeft from "$lib/assets/ArrowLeft.png";
   import HomeLogo from "$lib/components/HomeLogo.svelte";
   import Navigation from "$lib/components/Navigation.svelte";
   import ThemeSwitcher from "$lib/components/ThemeSwitcher.svelte";
-  import { isDarkTheme } from "$lib/stores/stores";
+  import { theme, sidebar } from "$lib/stores/stores";
+  import { onMount } from "svelte";
+  import { scale } from "svelte/transition";
 
-  function addDarkTheme() {
-    const body = document.querySelector("body");
-    $isDarkTheme = true;
-    body?.classList.add("dark-theme");
+  $: isSidebarExtended = JSON.parse($sidebar);
+
+  function handleSidebar() {
+    $sidebar = isSidebarExtended ? "false" : "true";
   }
-  function removeDarkTheme() {
+  function handleThemeSwitch() {
     const body = document.querySelector("body");
-    $isDarkTheme = false;
-    body?.classList.remove("dark-theme");
+
+    $theme = $theme === "light" ? "dark" : "light";
+    body?.classList.toggle("dark-theme");
   }
+
+  onMount(() => {
+    const body = document.querySelector("body");
+
+    if ($theme === "light") {
+      body?.classList.remove("dark-theme");
+    } else {
+      body?.classList.add("dark-theme");
+    }
+  });
 </script>
 
-<div class="wrapper">
-  <div class="header-wrapper">
-    <!-- <HomeLogo /> -->
+<div class="wrapper" class:extended={isSidebarExtended}>
+  <div class="sidebar-wrapper">
+    <HomeLogo />
     <header class="header">
-      <Navigation />
+      <Navigation isExtended={isSidebarExtended} />
     </header>
-    <ThemeSwitcher
-      isDarkTheme={$isDarkTheme}
-      moonClickHandler={() => addDarkTheme()}
-      sunClickHandler={() => removeDarkTheme()}
-    />
-    <!-- <Footer /> -->
+    <footer class="footer">
+      <ThemeSwitcher theme={$theme} switchHandler={() => handleThemeSwitch()} />
+      <button
+        class="footer__button"
+        type="button"
+        on:click={() => handleSidebar()}
+      >
+        {#if isSidebarExtended}
+          <img src={arrowLeft} alt="" draggable="false" transition:scale />
+        {:else}
+          <img src={arrowRight} alt="" draggable="false" transition:scale />
+        {/if}
+      </button>
+    </footer>
   </div>
 
   <slot />
@@ -39,21 +60,64 @@
 <style lang="scss">
   .wrapper {
     display: grid;
-    grid-template-columns: 310px 1fr;
+    grid-template-columns: 80px 1fr;
     width: calc(100vw - (100vw - 100%));
+    max-width: 1920px;
+    margin: 0 auto;
+    transition: 0.2s;
+
+    &.extended {
+      grid-template-columns: 124px 1fr;
+    }
   }
-  .header-wrapper {
+  .sidebar-wrapper {
     position: relative;
     display: flex;
-    justify-content: flex-end;
     align-items: center;
     height: 100vh;
+    box-shadow: 0px 0 4px rgba(0, 0, 0, 0.3);
   }
   .header {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 0 30px;
+    width: 100%;
+    height: 100%;
+    background-color: var(--bg-color);
+  }
+  .footer {
+    position: absolute;
+    bottom: 20px;
+    left: 0;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    &__button {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 50px;
+      height: 50px;
+      padding: 0;
+      border: 0;
+      border-radius: 100%;
+      background-color: unset;
+      transition: 0.2s;
+      cursor: pointer;
+
+      &:hover {
+        background-color: var(--hover-color);
+      }
+
+      & img {
+        position: absolute;
+        width: 25px;
+        filter: invert(var(--img-invert));
+      }
+    }
   }
 </style>

@@ -26,7 +26,6 @@
     padding: 5px;
     box-shadow: var(--box-shadow-options);
     background-color: var(--bg-accent-color);
-    transition: 0.2s;
     opacity: 1;
 
     & span {
@@ -36,11 +35,10 @@
     & img {
       height: 100%;
       filter: invert(var(--img-invert));
-      transition: 0.2s;
     }
 
     &_selectable {
-      opacity: 0.4;
+      opacity: 0.5;
       user-select: none;
       cursor: pointer;
 
@@ -51,7 +49,7 @@
       }
 
       &:hover {
-        opacity: 0.7;
+        opacity: 0.8;
       }
     }
   }

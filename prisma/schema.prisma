@@ -37,12 +37,9 @@ model RangeCell {
 }
 
 model Range {
-  id             String          @id @unique @default(uuid())
-  name           String          @unique
-  grid           RangeCell[]
-  skillLevels    SkillLevel[]    @relation("RangeToSkillLevel")
-  talents        Talent[]        @relation("RangeToTalent")
-  operatorPhases OperatorPhase[]
+  id         String       @id @unique
+  grid       RangeCell[]
+  SkillLevel SkillLevel[]
 }
 
 model SkillLevel {
@@ -51,10 +48,11 @@ model SkillLevel {
   description String  @default("")
   spCost      Int
   initSp      Int
-  duration    String
+  duration    Int
   skillId     String?
   Skill       Skill?  @relation(fields: [skillId], references: [id])
-  range       Range[] @relation("RangeToSkillLevel")
+  range       Range?  @relation(fields: [rangeId], references: [id])
+  rangeId     String?
 }
 
 model Skill {
@@ -85,7 +83,7 @@ model Talent {
   operatorId String?
   operator   Operator?     @relation(fields: [operatorId], references: [id])
   levels     TalentLevel[]
-  range      Range[]       @relation("RangeToTalent")
+  // range      Range[]       @relation("RangeToTalent")
 }
 
 model Summon {
@@ -111,7 +109,7 @@ model OperatorAttributes {
 
 model OperatorPhase {
   id                  String               @id
-  range               Range[]
+  // range               Range[]
   maxLevel            Int
   attributesKeyFrames OperatorAttributes[]
 

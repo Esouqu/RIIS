@@ -7,6 +7,13 @@ export const GET: RequestHandler = async () => {
     where: {
       isObtainable: true,
     },
+    select: {
+      id: true,
+      name: true,
+      portraitUrl: true,
+      rarity: true,
+      class: true,
+    },
     orderBy: [
       { rarity: 'desc' },
       { releaseDate: 'desc' },

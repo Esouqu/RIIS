@@ -1,10 +1,11 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  import { fade, slide } from "svelte/transition";
+  import { fade } from "svelte/transition";
   import { page } from "$app/stores";
   import type {
     Art,
     Operator,
+    Range,
     RangeCell,
     Skill,
     SkillLevel,
@@ -23,20 +24,21 @@
   import Tag from "$lib/components/Tag.svelte";
 
   interface IOperatorConnects {
-    artList: Array<Art>;
+    artList: Art[];
     skills: Array<
       Skill & {
         levels: Array<
           SkillLevel & {
-            range: Array<RangeCell>;
+            range: Range & {
+              grid: RangeCell[];
+            };
           }
         >;
       }
     >;
     talents: Array<
       Talent & {
-        levels: Array<TalentLevel>;
-        range: Array<RangeCell>;
+        levels: TalentLevel[];
       }
     >;
   }
@@ -49,7 +51,10 @@
 
     await fetchWithType<Operator & IOperatorConnects>(
       `/api/operators/${$page.params.operator}`
-    ).then((data) => (operator = data));
+    ).then((data) => {
+      operator = data;
+      console.log(data);
+    });
 
     isLoading = false;
   });
@@ -122,7 +127,6 @@
             <div class="talents-wrapper">
               {#each operator.talents as talent, idx}
                 <TalentCard
-                  --fontSize={"20px"}
                   title={talent.name}
                   titlePosition={"left"}
                   titleGradient={"left"}
@@ -147,11 +151,11 @@
   .main {
     display: grid;
     grid-template-columns: 1fr auto;
+    gap: 20px;
     height: 100vh;
     overflow: hidden;
   }
   .section {
-    margin: 10px;
     overflow: hidden;
 
     &_info {
@@ -173,7 +177,6 @@
     padding: 20px;
     background-color: var(--bg-sub-accent-color);
     box-shadow: var(--box-shadow-options);
-    transition: 0.2s;
 
     &-inner-wrapper {
       display: flex;
@@ -189,7 +192,9 @@
 
     & h1 {
       margin: 0;
-      font-size: 36px;
+      font-size: 39.09px;
+      line-height: 1;
+      font-weight: 600;
       text-transform: uppercase;
     }
   }
@@ -209,7 +214,6 @@
   .stars-wrapper {
     display: flex;
     flex-direction: row;
-    margin-top: -5px;
 
     & .star {
       margin-right: -7px;

@@ -22,7 +22,6 @@
     padding: var(--cc-p, 10px);
     box-shadow: var(--box-shadow-options);
     background-color: var(--bg-color);
-    transition: 0.2s;
 
     & span {
       font-size: var(--cc-titleSize, 14px);
