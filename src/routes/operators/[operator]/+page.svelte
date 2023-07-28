@@ -53,7 +53,6 @@
       `/api/operators/${$page.params.operator}`
     ).then((data) => {
       operator = data;
-      console.log(data);
     });
 
     isLoading = false;
@@ -83,7 +82,14 @@
         {:else}
           <div class="nameplate-inner-wrapper">
             <div class="name-wrapper">
-              <h1>{operator.name}</h1>
+              {#if operator.name.split(" the ").length > 1}
+                <div>
+                  <h1>{operator.name.split(" the ")[0]}</h1>
+                  <h2>the {operator.name.split(" the ")[1]}</h2>
+                </div>
+              {:else}
+                <h1>{operator.name}</h1>
+              {/if}
               <div class="stars-wrapper">
                 {#each { length: operator.rarity + 1 } as _, idx}
                   <div class="star" in:fade={{ delay: 50 * idx }}>
@@ -195,6 +201,14 @@
       font-size: 39.09px;
       line-height: 1;
       font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    & h2 {
+      margin: 0;
+      font-size: 1.25rem;
+      line-height: 1;
+      font-weight: 500;
       text-transform: uppercase;
     }
   }

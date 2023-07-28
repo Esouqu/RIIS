@@ -37,9 +37,11 @@ model RangeCell {
 }
 
 model Range {
-  id         String       @id @unique
-  grid       RangeCell[]
-  SkillLevel SkillLevel[]
+  id            String          @id @unique
+  grid          RangeCell[]
+  SkillLevel    SkillLevel[]
+  TalentLevel   TalentLevel[]
+  OperatorPhase OperatorPhase[]
 }
 
 model SkillLevel {
@@ -67,23 +69,26 @@ model Skill {
 }
 
 model TalentLevel {
-  id          Int     @id @unique @default(autoincrement())
-  levelId     Int     @default(0)
+  id          String @id @unique @default(uuid())
+  levelId     Int    @default(0)
   description String
   phase       Int
   level       Int
   potential   Int
-  talentId    String?
-  talent      Talent? @relation(fields: [talentId], references: [id])
+
+  talentId String?
+  talent   Talent? @relation(fields: [talentId], references: [id])
+  rangeId  String?
+  range    Range?  @relation(fields: [rangeId], references: [id])
 }
 
 model Talent {
-  id         String        @id @unique @default(uuid())
-  name       String
+  id     String        @id @unique @default(uuid())
+  name   String
+  levels TalentLevel[]
+
+  operator   Operator? @relation(fields: [operatorId], references: [id])
   operatorId String?
-  operator   Operator?     @relation(fields: [operatorId], references: [id])
-  levels     TalentLevel[]
-  // range      Range[]       @relation("RangeToTalent")
 }
 
 model Summon {
@@ -93,11 +98,11 @@ model Summon {
 }
 
 model OperatorAttributes {
-  id              String @id @unique @default(uuid())
+  id              String @id @unique
   maxHp           Int
   atk             Int
   def             Int
-  magicResistance Float
+  magicResistance Int
   cost            Int
   blockCount      Int
   baseAttackTime  Float
@@ -108,13 +113,14 @@ model OperatorAttributes {
 }
 
 model OperatorPhase {
-  id                  String               @id
-  // range               Range[]
+  id                  String               @id @unique
   maxLevel            Int
   attributesKeyFrames OperatorAttributes[]
 
   Operator   Operator? @relation(fields: [operatorId], references: [id])
   operatorId String?
+  range      Range?    @relation(fields: [rangeId], references: [id])
+  rangeId    String?
 }
 
 model Operator {

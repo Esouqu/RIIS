@@ -31,7 +31,6 @@
     }
 
     &.selected {
-      /* background-color: #0f0f0f; */
       opacity: 1;
     }
   }

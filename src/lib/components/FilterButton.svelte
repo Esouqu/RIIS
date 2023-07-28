@@ -41,7 +41,7 @@
       opacity: 1;
 
       & img {
-        filter: invert(var(--img-invert));
+        filter: invert(0);
       }
     }
   }
