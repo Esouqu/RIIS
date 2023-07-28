@@ -11,7 +11,15 @@ export const GET: RequestHandler = async ({ params }) => {
       artList: true,
       talents: {
         include: {
-          levels: true,
+          levels: {
+            include: {
+              range: {
+                include: {
+                  grid: true,
+                }
+              }
+            }
+          }
         }
       },
       skills: {

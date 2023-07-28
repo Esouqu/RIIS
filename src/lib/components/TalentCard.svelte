@@ -13,27 +13,35 @@
   export let title: string = "title";
   export let titlePosition: titlePositionType = "center";
   export let titleGradient: gradientType = "left";
-  export let description: string = "description";
   export let withIcon: boolean = false;
   export let iconUrl: string = "";
+  export let description: string = "description";
   export let withBorderRadius: boolean = true;
-  export let levels: Array<TalentLevel> = [];
+  export let levels: TalentLevel[] = [];
 
-  let currentLevel: number = 0;
+  let currentLevel: TalentLevel = levels[0];
   let isPotentialActive: boolean = false;
 
+  $: console.log(levels);
   $: levelsWithoutPotential = levels.filter((level) => level.potential === 0);
   $: levelsWithPotential = levels.filter((level) => level.potential !== 0);
 
   function changeDescription() {
-    if (isPotentialActive) {
-      description = levelsWithPotential[currentLevel].description;
-    } else {
-      description = levelsWithoutPotential[currentLevel].description;
+    const currentPhaseDescription = levelsWithoutPotential.find(
+      (lvl) => lvl.phase === currentLevel.phase
+    )?.description;
+    const currentPotentialDescription = levelsWithPotential.find(
+      (lvl) => lvl.phase === currentLevel.phase
+    )?.description;
+
+    if (isPotentialActive && currentPotentialDescription) {
+      description = currentPotentialDescription;
+    } else if (currentPhaseDescription) {
+      description = currentPhaseDescription;
     }
   }
-  function handlePhaseClick(idx: number) {
-    currentLevel = idx;
+  function handlePhaseClick(phase: TalentLevel) {
+    currentLevel = phase;
     changeDescription();
   }
   function handlePotentialClick() {
@@ -64,11 +72,11 @@
     <h2>{title}</h2>
     <div class="level-buttons-wrapper">
       {#if levels.length > 0}
-        {#each levelsWithoutPotential as { phase }, idx}
+        {#each levelsWithoutPotential as level}
           <TalentButton
-            iconUrl={getEliteIcon(phase)}
-            isSelected={currentLevel === idx}
-            handleClick={() => handlePhaseClick(idx)}
+            iconUrl={getEliteIcon(level.phase)}
+            isSelected={currentLevel === level}
+            handleClick={() => handlePhaseClick(level)}
           />
         {/each}
         {#if levelsWithPotential.length > 0}

@@ -198,6 +198,7 @@
       }
       & [data-chargeType="Defensive Recovery"] {
         padding: 0 5px;
+        color: #0f0f0f;
         background-color: orange;
       }
       & [data-chargeType="Per Second Recovery"] {
