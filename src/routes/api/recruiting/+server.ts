@@ -10,6 +10,14 @@ export const GET: RequestHandler = async () => {
         { obtainApproach: 'Recruitment & Headhunting' },
       ]
     },
+    select: {
+      id: true,
+      name: true,
+      portraitUrl: true,
+      rarity: true,
+      class: true,
+      recruitmentTagList: true,
+    },
     orderBy: [
       { rarity: 'desc' },
       { releaseDate: 'desc' },

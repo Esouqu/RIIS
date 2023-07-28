@@ -21,7 +21,7 @@
     justify-content: center;
     width: 100%;
     border: 0;
-    background-color: var(--main-color-ultra-white);
+    background-color: var(--bg-accent-color);
     opacity: 0.5;
     transition: 0.2s;
     cursor: pointer;

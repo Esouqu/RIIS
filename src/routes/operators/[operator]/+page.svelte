@@ -1,10 +1,11 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  import { fade, slide } from "svelte/transition";
+  import { fade } from "svelte/transition";
   import { page } from "$app/stores";
   import type {
     Art,
     Operator,
+    Range,
     RangeCell,
     Skill,
     SkillLevel,
@@ -23,20 +24,21 @@
   import Tag from "$lib/components/Tag.svelte";
 
   interface IOperatorConnects {
-    artList: Array<Art>;
+    artList: Art[];
     skills: Array<
       Skill & {
         levels: Array<
           SkillLevel & {
-            range: Array<RangeCell>;
+            range: Range & {
+              grid: RangeCell[];
+            };
           }
         >;
       }
     >;
     talents: Array<
       Talent & {
-        levels: Array<TalentLevel>;
-        range: Array<RangeCell>;
+        levels: TalentLevel[];
       }
     >;
   }
@@ -49,7 +51,9 @@
 
     await fetchWithType<Operator & IOperatorConnects>(
       `/api/operators/${$page.params.operator}`
-    ).then((data) => (operator = data));
+    ).then((data) => {
+      operator = data;
+    });
 
     isLoading = false;
   });
@@ -78,7 +82,14 @@
         {:else}
           <div class="nameplate-inner-wrapper">
             <div class="name-wrapper">
-              <h1>{operator.name}</h1>
+              {#if operator.name.split(" the ").length > 1}
+                <div>
+                  <h1>{operator.name.split(" the ")[0]}</h1>
+                  <h2>the {operator.name.split(" the ")[1]}</h2>
+                </div>
+              {:else}
+                <h1>{operator.name}</h1>
+              {/if}
               <div class="stars-wrapper">
                 {#each { length: operator.rarity + 1 } as _, idx}
                   <div class="star" in:fade={{ delay: 50 * idx }}>
@@ -122,7 +133,6 @@
             <div class="talents-wrapper">
               {#each operator.talents as talent, idx}
                 <TalentCard
-                  --fontSize={"20px"}
                   title={talent.name}
                   titlePosition={"left"}
                   titleGradient={"left"}
@@ -147,11 +157,11 @@
   .main {
     display: grid;
     grid-template-columns: 1fr auto;
+    gap: 20px;
     height: 100vh;
     overflow: hidden;
   }
   .section {
-    margin: 10px;
     overflow: hidden;
 
     &_info {
@@ -171,8 +181,8 @@
     display: flex;
     justify-content: center;
     padding: 20px;
-    background-color: #f4f5f6;
-    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.25);
+    background-color: var(--bg-sub-accent-color);
+    box-shadow: var(--box-shadow-options);
 
     &-inner-wrapper {
       display: flex;
@@ -188,7 +198,17 @@
 
     & h1 {
       margin: 0;
-      font-size: 36px;
+      font-size: 39.09px;
+      line-height: 1;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    & h2 {
+      margin: 0;
+      font-size: 1.25rem;
+      line-height: 1;
+      font-weight: 500;
       text-transform: uppercase;
     }
   }
@@ -201,13 +221,13 @@
 
     & img {
       width: 100%;
-      filter: invert(1);
+      filter: invert(var(--img-invert));
+      transition: 0.2s;
     }
   }
   .stars-wrapper {
     display: flex;
     flex-direction: row;
-    margin-top: -5px;
 
     & .star {
       margin-right: -7px;

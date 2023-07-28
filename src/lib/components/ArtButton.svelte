@@ -22,18 +22,18 @@
     position: relative;
     display: flex;
     align-items: center;
-    width: 70px;
-    height: 70px;
+    width: 60px;
+    height: 60px;
     padding: var(--p, 0);
     border: 0;
-    background-color: var(--main-color-gray);
+    background-color: var(--bg-color);
     opacity: 0.5;
     transition: 0.2s;
     cursor: pointer;
 
     & img {
       width: 100%;
-      filter: invert(var(--invert, 0));
+      filter: invert(var(--invert, var(--img-invert)));
     }
 
     &:hover {
@@ -52,7 +52,7 @@
         width: 4px;
         height: 100%;
         transform: translateY(-50%);
-        background-color: var(--main-color-blue);
+        background-color: var(--rarity-color-3);
       }
     }
   }

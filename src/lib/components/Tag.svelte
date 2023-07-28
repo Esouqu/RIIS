@@ -24,9 +24,8 @@
 <style lang="scss">
   .tag {
     padding: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-    background-color: var(--main-color-ultra-white);
-    transition: 0.2s;
+    box-shadow: var(--box-shadow-options);
+    background-color: var(--bg-accent-color);
     opacity: 1;
 
     & span {
@@ -35,21 +34,22 @@
 
     & img {
       height: 100%;
+      filter: invert(var(--img-invert));
     }
 
     &_selectable {
-      opacity: 0.4;
+      opacity: 0.5;
       user-select: none;
       cursor: pointer;
 
       &.selected {
         opacity: 1;
-        color: var(--main-color-white);
-        background-color: var(--main-color-blue);
+        color: #f4f5f6;
+        background-color: var(--rarity-color-3);
       }
 
       &:hover {
-        opacity: 0.7;
+        opacity: 0.8;
       }
     }
   }

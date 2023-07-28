@@ -28,23 +28,24 @@
 <style lang="scss">
   a {
     text-decoration: none;
-    color: var(--main-color-black);
+    color: var(--text-color);
   }
   .operator-portrait {
     position: relative;
     display: flex;
+    justify-content: center;
+    align-items: center;
     width: 90px;
     height: 100%;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    box-shadow: var(--box-shadow-options);
     transition: 0.2s;
 
     &:hover {
       transform: scale(1.3);
-      /* background-image: var(--rarity-color-orange) !important; */
       z-index: 9999;
 
       & .operator-portrait__name {
-        bottom: calc(100%);
+        bottom: 100%;
         display: block;
         transition: 0.2s;
       }
@@ -52,43 +53,43 @@
       &.rarity-1 {
         background-image: linear-gradient(
           15deg,
-          var(--sub-color-gray) 0%,
-          var(--sub-color-gray) 100%
+          var(--rarity-color-1) 0%,
+          var(--rarity-color-1) 100%
         );
       }
       &.rarity-2 {
         background-image: linear-gradient(
           15deg,
-          var(--rarity-color-lightgreen) 0%,
-          var(--rarity-color-lightgreen) 100%
+          var(--rarity-color-2) 0%,
+          var(--rarity-color-2) 100%
         );
       }
       &.rarity-3 {
         background-image: linear-gradient(
           15deg,
-          var(--main-color-blue) 0%,
-          var(--main-color-blue) 100%
+          var(--rarity-color-3) 0%,
+          var(--rarity-color-3) 100%
         );
       }
       &.rarity-4 {
         background-image: linear-gradient(
           15deg,
-          var(--rarity-color-lightpurple) 0%,
-          var(--rarity-color-lightpurple) 100%
+          var(--rarity-color-4) 0%,
+          var(--rarity-color-4) 100%
         );
       }
       &.rarity-5 {
         background-image: linear-gradient(
           15deg,
-          var(--rarity-color-yellow) 0%,
-          var(--rarity-color-yellow) 100%
+          var(--rarity-color-5) 0%,
+          var(--rarity-color-5) 100%
         );
       }
       &.rarity-6 {
         background-image: linear-gradient(
           15deg,
-          var(--rarity-color-orange) 0%,
-          var(--rarity-color-orange) 100%
+          var(--rarity-color-6) 0%,
+          var(--rarity-color-6) 100%
         );
       }
     }
@@ -97,9 +98,9 @@
       position: absolute;
       bottom: 0;
       display: none;
-      width: 100%;
+      min-width: 100%;
       text-align: center;
-      background-color: var(--main-color-gray);
+      background-color: var(--bg-color);
     }
 
     & img {
@@ -110,42 +111,42 @@
     &.rarity-1 {
       background-image: linear-gradient(
         15deg,
-        var(--sub-color-gray) 0%,
+        var(--rarity-color-1) 0%,
         rgba(244, 245, 246, 0) 90%
       );
     }
     &.rarity-2 {
       background-image: linear-gradient(
         15deg,
-        var(--rarity-color-lightgreen) 0%,
+        var(--rarity-color-2) 0%,
         rgba(244, 245, 246, 0) 90%
       );
     }
     &.rarity-3 {
       background-image: linear-gradient(
         15deg,
-        var(--main-color-blue) 0%,
+        var(--rarity-color-3) 0%,
         rgba(244, 245, 246, 0) 90%
       );
     }
     &.rarity-4 {
       background-image: linear-gradient(
         15deg,
-        var(--rarity-color-lightpurple) 0%,
+        var(--rarity-color-4) 0%,
         rgba(244, 245, 246, 0) 90%
       );
     }
     &.rarity-5 {
       background-image: linear-gradient(
         15deg,
-        var(--rarity-color-yellow) 0%,
+        var(--rarity-color-5) 0%,
         rgba(244, 245, 246, 0) 90%
       );
     }
     &.rarity-6 {
       background-image: linear-gradient(
         15deg,
-        var(--rarity-color-orange) 0%,
+        var(--rarity-color-6) 0%,
         rgba(244, 245, 246, 0) 90%
       );
     }

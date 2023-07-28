@@ -1,6 +1,5 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  import type { Operator } from "@prisma/client";
   import Container from "../../lib/components/Container.svelte";
   import Loader from "$lib/components/Loader.svelte";
   import OperatorPortrait from "$lib/components/OperatorPortrait.svelte";
@@ -8,6 +7,7 @@
   import FilterButton from "$lib/components/FilterButton.svelte";
   import fetchWithType from "$lib/utils/fetchWithType";
   import CardContainer from "$lib/components/CardContainer.svelte";
+  import type { Operator } from "@prisma/client";
 
   const classFilterOptions = [
     { name: "caster", icon: getOperatorClassImage("caster") },
@@ -20,18 +20,24 @@
     { name: "guard", icon: getOperatorClassImage("guard") },
   ];
 
-  let operators: Array<Operator> = [];
+  let operators: Operator[] = [];
   let isOperatorsLoading = true;
   let searchValue: string = "";
   let selectedClasses: Array<string> = [];
 
   onMount(async () => {
-    await fetchWithType<Array<Operator>>(`/api/operators`).then(
+    await fetchWithType<Operator[]>(`/api/operators`).then(
       (data) => (operators = data)
     );
 
     isOperatorsLoading = false;
   });
+
+  // $: console.log(
+  //   operators
+  //     .filter((op) => op.name.includes(" the "))
+  //     .map((op) => op.name.split("the"))
+  // );
 
   $: filteredOperators = operators.filter((operator) => {
     const nameMatch =
@@ -107,16 +113,13 @@
 </main>
 
 <style lang="scss">
-  .main {
-    margin: 10px;
-  }
   .scroll-container {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 40px;
-    height: calc(100vh - 60px);
-    padding: 20px;
+    height: calc(100vh - 40px);
+    padding: 20px 40px;
     overflow-y: auto;
   }
   .grid {
@@ -154,7 +157,7 @@
       height: 2px;
       margin: 0 auto;
       opacity: 0.3;
-      background-color: var(--main-color-black);
+      background-color: var(--text-color);
     }
 
     & input {
@@ -164,10 +167,12 @@
       border: 0;
       font-size: 18px;
       font-weight: 500;
+      color: var(--text-color);
       background-color: unset;
 
       &::placeholder {
-        color: #0f0f0f50;
+        opacity: 0.5;
+        color: var(--text-color);
       }
 
       &:focus {
