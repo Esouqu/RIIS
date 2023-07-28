@@ -11,16 +11,30 @@ export const GET: RequestHandler = async ({ params }) => {
       artList: true,
       talents: {
         include: {
-          levels: true,
-          range: true,
+          levels: {
+            include: {
+              range: {
+                include: {
+                  grid: true,
+                }
+              }
+            }
+          }
         }
       },
       skills: {
         include: {
           levels: {
             include: {
-              range: true
+              range: {
+                include: {
+                  grid: true,
+                }
+              },
             },
+            orderBy: {
+              levelId: 'asc',
+            }
           },
         },
         orderBy: {
