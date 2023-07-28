@@ -63,54 +63,52 @@
   <title>Operators</title>
 </svelte:head>
 
-<main class="main">
-  <Container --cont-justify={"start"}>
-    <div class="scroll-container">
-      <div class="filters-wrapper">
-        <CardContainer title="Search">
-          <div class="input-wrapper">
-            <div class="input-inner-wrapper">
-              <input
-                type="text"
-                id="search"
-                class="search"
-                maxlength="20"
-                placeholder="Operator name"
-                bind:value={searchValue}
-              />
-            </div>
+<Container htmlTag={"main"}>
+  <div class="scroll-container">
+    <div class="filters-wrapper">
+      <CardContainer title="Search">
+        <div class="input-wrapper">
+          <div class="input-inner-wrapper">
+            <input
+              type="text"
+              id="search"
+              class="search"
+              maxlength="20"
+              placeholder="Operator name"
+              bind:value={searchValue}
+            />
           </div>
-        </CardContainer>
-        <CardContainer title="Class">
-          <div class="filter-buttons-wrapper">
-            {#each classFilterOptions as { name, icon }}
-              <FilterButton
-                {icon}
-                isSelected={selectedClasses.includes(name)}
-                handleClick={() => toggleOperatorClass(name)}
-              />
-            {/each}
-          </div>
-        </CardContainer>
-      </div>
-      {#if isOperatorsLoading}
-        <Loader />
-      {:else}
-        <div class="grid">
-          {#each filteredOperators as { id, name, portraitUrl, rarity }, idx}
-            <OperatorPortrait
-              {name}
-              {rarity}
-              operatorId={id}
-              imageUrl={portraitUrl}
-              transitionDelay={5 * idx}
+        </div>
+      </CardContainer>
+      <CardContainer title="Class">
+        <div class="filter-buttons-wrapper">
+          {#each classFilterOptions as { name, icon }}
+            <FilterButton
+              {icon}
+              isSelected={selectedClasses.includes(name)}
+              handleClick={() => toggleOperatorClass(name)}
             />
           {/each}
         </div>
-      {/if}
+      </CardContainer>
     </div>
-  </Container>
-</main>
+    {#if isOperatorsLoading}
+      <Loader />
+    {:else}
+      <div class="grid">
+        {#each filteredOperators as { id, name, portraitUrl, rarity }, idx}
+          <OperatorPortrait
+            {name}
+            {rarity}
+            operatorId={id}
+            imageUrl={portraitUrl}
+            transitionDelay={5 * idx}
+          />
+        {/each}
+      </div>
+    {/if}
+  </div>
+</Container>
 
 <style lang="scss">
   .scroll-container {
@@ -121,6 +119,7 @@
     height: calc(100vh - 40px);
     padding: 20px 40px;
     overflow-y: auto;
+    scrollbar-gutter: stable;
   }
   .grid {
     display: flex;
