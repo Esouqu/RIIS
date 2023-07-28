@@ -92,21 +92,17 @@
     </div>
   </div>
   <div class="skill-card-description-wrapper">
-    {#key selectedTab}
-      {#key Math.round(sliderValue)}
-        <div class="skill-card__description" in:fade={{ duration: 200 }}>
-          <p>
-            {#each currentLevelDescription as { text, title, description }}
-              {#if description && title}
-                <span style="color: var(--rarity-color-3);">{description}</span>
-              {:else}
-                {text}
-              {/if}
-            {/each}
-          </p>
-        </div>
-      {/key}
-    {/key}
+    <div class="skill-card__description">
+      <p>
+        {#each currentLevelDescription as { text, title, description }}
+          {#if description && title}
+            <span style="color: var(--rarity-color-3);">{description}</span>
+          {:else}
+            {text}
+          {/if}
+        {/each}
+      </p>
+    </div>
     {#if currentLevel.range}
       <RangeGrid cells={currentLevel.range.grid} />
     {/if}

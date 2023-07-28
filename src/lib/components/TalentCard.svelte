@@ -1,14 +1,19 @@
 <script lang="ts">
-  import type { TalentLevel } from "@prisma/client";
+  import type { Range, RangeCell, TalentLevel } from "@prisma/client";
   import TalentButton from "./TalentButton.svelte";
   import replaceTextTags from "$lib/utils/replaceTextTags";
-  import { fade } from "svelte/transition";
   import getEliteIcon from "$lib/utils/getEliteIcon";
   import getPotentialIcon from "$lib/utils/getPotentialIcon";
   import CardContainer from "./CardContainer.svelte";
+  import RangeGrid from "./RangeGrid.svelte";
 
   type gradientType = "top" | "bottom" | "left" | "right" | "center";
   type titlePositionType = "left" | "right" | "center";
+  interface IRangeConnect {
+    range: Range & {
+      grid: RangeCell[];
+    };
+  }
 
   export let title: string = "title";
   export let titlePosition: titlePositionType = "center";
@@ -17,12 +22,11 @@
   export let iconUrl: string = "";
   export let description: string = "description";
   export let withBorderRadius: boolean = true;
-  export let levels: TalentLevel[] = [];
+  export let levels: Array<TalentLevel & IRangeConnect> = [];
 
-  let currentLevel: TalentLevel = levels[0];
+  let currentLevel: TalentLevel & IRangeConnect = levels[0];
   let isPotentialActive: boolean = false;
 
-  $: console.log(levels);
   $: levelsWithoutPotential = levels.filter((level) => level.potential === 0);
   $: levelsWithPotential = levels.filter((level) => level.potential !== 0);
 
@@ -40,7 +44,7 @@
       description = currentPhaseDescription;
     }
   }
-  function handlePhaseClick(phase: TalentLevel) {
+  function handlePhaseClick(phase: TalentLevel & IRangeConnect) {
     currentLevel = phase;
     changeDescription();
   }
@@ -98,18 +102,18 @@
         />
       </div>
     {/if}
-    {#key description}
-      <p in:fade={{ duration: 400 }}>
-        {#each replaceTextTags(description) as item}
-          {#if item.description && item.title}
-            <span style="color: var(--rarity-color-3);">{item.description}</span
-            >
-          {:else}
-            {item.text}
-          {/if}
-        {/each}
-      </p>
-    {/key}
+    <p>
+      {#each replaceTextTags(description) as item}
+        {#if item.description && item.title}
+          <span style="color: var(--rarity-color-3);">{item.description}</span>
+        {:else}
+          {item.text}
+        {/if}
+      {/each}
+    </p>
+    {#if currentLevel?.range}
+      <RangeGrid cells={currentLevel.range.grid} />
+    {/if}
   </div>
 </CardContainer>
 

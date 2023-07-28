@@ -23,50 +23,52 @@
   import getGenderIcon from "$lib/utils/getGenderIcon";
   import Tag from "$lib/components/Tag.svelte";
 
+  interface IRangeConnect {
+    range: Range & {
+      grid: RangeCell[];
+    };
+  }
+
   interface IOperatorConnects {
     artList: Art[];
     skills: Array<
       Skill & {
-        levels: Array<
-          SkillLevel & {
-            range: Range & {
-              grid: RangeCell[];
-            };
-          }
-        >;
+        levels: Array<SkillLevel & IRangeConnect>;
       }
     >;
     talents: Array<
       Talent & {
-        levels: TalentLevel[];
+        levels: Array<TalentLevel & IRangeConnect>;
       }
     >;
   }
 
   let operator: Operator & IOperatorConnects;
-  let isLoading = true;
+  let isOperatorLoading = true;
 
   onMount(async () => {
-    isLoading = true;
-
     await fetchWithType<Operator & IOperatorConnects>(
       `/api/operators/${$page.params.operator}`
     ).then((data) => {
       operator = data;
     });
 
-    isLoading = false;
+    isOperatorLoading = false;
   });
 </script>
 
 <svelte:head>
-  <title>{operator ? operator.name : "Operator"}</title>
+  {#if isOperatorLoading}
+    <title>Operator</title>
+  {:else}
+    <title>{operator.name}</title>
+  {/if}
 </svelte:head>
 
 <main class="main">
   <section class="section section_art">
     <Container>
-      {#if isLoading}
+      {#if isOperatorLoading}
         <Loader />
       {:else}
         <ArtViewer artList={operator.artList} artistName={operator.artist} />
@@ -77,7 +79,7 @@
   <section class="section section_info">
     <div class="info-wrapper">
       <div class="nameplate">
-        {#if isLoading}
+        {#if isOperatorLoading}
           <Loader />
         {:else}
           <div class="nameplate-inner-wrapper">
@@ -117,7 +119,7 @@
         --cont-justify={"start"}
         --cont-overflow={"auto"}
       >
-        {#if isLoading}
+        {#if isOperatorLoading}
           <Loader />
         {:else}
           <TalentCard
@@ -230,6 +232,7 @@
     flex-direction: row;
 
     & .star {
+      display: flex;
       margin-right: -7px;
     }
   }

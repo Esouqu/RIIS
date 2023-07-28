@@ -18,9 +18,12 @@ export const GET: RequestHandler = async ({ params }) => {
                   grid: true,
                 }
               }
+            },
+            orderBy: {
+              levelId: 'asc',
             }
-          }
-        }
+          },
+        },
       },
       skills: {
         include: {

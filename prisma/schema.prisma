@@ -37,8 +37,9 @@ model RangeCell {
 }
 
 model Range {
-  id            String          @id @unique
-  grid          RangeCell[]
+  id   String      @id @unique
+  grid RangeCell[]
+
   SkillLevel    SkillLevel[]
   TalentLevel   TalentLevel[]
   OperatorPhase OperatorPhase[]
@@ -51,8 +52,8 @@ model SkillLevel {
   spCost      Int
   initSp      Int
   duration    Int
-  skillId     String?
   Skill       Skill?  @relation(fields: [skillId], references: [id])
+  skillId     String?
   range       Range?  @relation(fields: [rangeId], references: [id])
   rangeId     String?
 }
