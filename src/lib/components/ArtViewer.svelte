@@ -14,7 +14,6 @@
 
   let currentImageIdx = 0;
   let flyDirection = 0;
-  let isDragged = false;
   let artScale = 1;
 
   $: currentArt = artList[currentImageIdx].full;
@@ -74,11 +73,7 @@
   {#key currentArt}
     <div
       class="art-wrapper"
-      class:dragged={isDragged}
-      use:draggable={{
-        onDragStart: () => (isDragged = true),
-        onDragEnd: () => (isDragged = false),
-      }}
+      use:draggable
       in:fly={{ y: flyDirection, duration: 500 }}
       out:fly={{
         y: flyDirection > 0 ? -Math.abs(flyDirection) : Math.abs(flyDirection),
@@ -123,11 +118,12 @@
     height: 100%;
     width: 100%;
     transition: 0.2s;
-    cursor: all-scroll;
+    cursor: grab;
 
-    &.dragged {
+    &:active {
       transition: none;
       z-index: 9999;
+      cursor: grabbing;
     }
 
     & img {
@@ -143,15 +139,12 @@
     bottom: 30px;
     display: flex;
     gap: 10px;
-    /* padding: 10px; */
   }
   .info-value {
     width: 100%;
     padding: 0 10px;
-    /* text-align: center; */
-    /* font-size: 20px; */
   }
-  .image-placeholder {
+  /* .image-placeholder {
     width: 100%;
     height: 100%;
     object-fit: contain;
@@ -161,5 +154,5 @@
       var(--main-color-blue) 0%,
       rgba(244, 245, 246, 0) 90%
     );
-  }
+  } */
 </style>

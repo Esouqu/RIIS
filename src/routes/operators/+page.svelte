@@ -33,12 +33,6 @@
     isOperatorsLoading = false;
   });
 
-  // $: console.log(
-  //   operators
-  //     .filter((op) => op.name.includes(" the "))
-  //     .map((op) => op.name.split("the"))
-  // );
-
   $: filteredOperators = operators.filter((operator) => {
     const nameMatch =
       !searchValue ||

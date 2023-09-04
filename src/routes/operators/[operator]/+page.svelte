@@ -5,6 +5,9 @@
   import type {
     Art,
     Operator,
+    OperatorAttributes,
+    OperatorPhase,
+    PotentialRank,
     Range,
     RangeCell,
     Skill,
@@ -22,6 +25,7 @@
   import getOperatorClassImage from "$lib/utils/getOperatorClassImage";
   import getGenderIcon from "$lib/utils/getGenderIcon";
   import Tag from "$lib/components/Tag.svelte";
+  import LevelCard from "$lib/components/LevelCard.svelte";
 
   interface IRangeConnect {
     range: Range & {
@@ -41,6 +45,13 @@
         levels: Array<TalentLevel & IRangeConnect>;
       }
     >;
+    phases: Array<
+      OperatorPhase & { attributesKeyFrames: OperatorAttributes[] } & {
+        range: Range & { grid: RangeCell[] };
+      }
+    >;
+    potential: PotentialRank[];
+    favor: OperatorAttributes;
   }
 
   let operator: Operator & IOperatorConnects;
@@ -55,6 +66,8 @@
 
     isOperatorLoading = false;
   });
+
+  $: console.log(operator);
 </script>
 
 <svelte:head>
@@ -133,13 +146,13 @@
 
           {#if operator.talents.length > 0}
             <div class="talents-wrapper">
-              {#each operator.talents as talent, idx}
+              {#each operator.talents as { name, levels }, idx}
                 <TalentCard
-                  title={talent.name}
+                  title={name}
                   titlePosition={"left"}
                   titleGradient={"left"}
-                  description={talent.levels[0].description}
-                  levels={talent.levels}
+                  description={levels[0].description}
+                  {levels}
                   withBorderRadius={operator.talents.length - 1 === idx}
                 />
               {/each}
@@ -149,6 +162,11 @@
           {#if operator.skills.length > 0}
             <SkillCard skills={operator.skills} />
           {/if}
+          <LevelCard
+            phases={operator.phases}
+            potential={operator.potential}
+            favor={operator.favor}
+          />
         {/if}
       </Container>
     </div>

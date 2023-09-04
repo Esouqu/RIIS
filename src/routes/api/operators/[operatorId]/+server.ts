@@ -44,6 +44,21 @@ export const GET: RequestHandler = async ({ params }) => {
           skillId: 'asc'
         }
       },
+      phases: {
+        include: {
+          attributesKeyFrames: true,
+          range: {
+            include: {
+              grid: true,
+            }
+          }
+        },
+        orderBy: {
+          maxLevel: 'asc',
+        }
+      },
+      potential: true,
+      favor: true,
       summons: true,
     },
   });

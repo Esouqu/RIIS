@@ -1,12 +1,11 @@
-export default function replaceTextTags(text: string): Array<{ text: string, title?: string, description?: string }> {
+export default function replaceTextTags(text: string): Array<{ text: string, value?: string }> {
   return text.split(/(<[^/]+.\b[^>]+>[^<]*<\/>)/)
     .map((sentence) => {
       const valueInsideTag = sentence.match(/(?<=>).*?(?=<)/g)?.join("");
 
       let obj: {
         text: string;
-        title?: string;
-        description?: string;
+        value?: string;
       };
 
       if (valueInsideTag === undefined) {
@@ -14,8 +13,7 @@ export default function replaceTextTags(text: string): Array<{ text: string, tit
       } else {
         obj = {
           text: sentence,
-          title: valueInsideTag,
-          description: valueInsideTag,
+          value: valueInsideTag,
         };
       }
 

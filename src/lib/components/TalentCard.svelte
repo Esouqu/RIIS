@@ -103,11 +103,11 @@
       </div>
     {/if}
     <p>
-      {#each replaceTextTags(description) as item}
-        {#if item.description && item.title}
-          <span style="color: var(--rarity-color-3);">{item.description}</span>
+      {#each replaceTextTags(description) as { text, value }}
+        {#if text && value}
+          <span style="color: var(--rarity-color-3);">{value}</span>
         {:else}
-          {item.text}
+          {text}
         {/if}
       {/each}
     </p>
@@ -169,6 +169,7 @@
 
       & p {
         margin: 0;
+        font-variant-numeric: tabular-nums;
       }
     }
   }

@@ -2,27 +2,38 @@
   import sun from "$lib/assets/sun.svg";
   import moon from "$lib/assets/moon.svg";
   import { scale } from "svelte/transition";
+  import { theme } from "$lib/stores";
+  import { onMount } from "svelte";
 
-  export let theme: string = "light";
-  export let switchHandler: () => void = () => {};
+  let body: HTMLBodyElement | null;
+
+  function handleThemeSwitch() {
+    $theme = $theme === "dark" ? "light" : "dark";
+    body?.classList.toggle("dark-theme");
+  }
+
+  onMount(() => {
+    body = document.querySelector("body");
+
+    if ($theme === "dark") {
+      body?.classList.add("dark-theme");
+    }
+  });
 </script>
 
-<button class="theme-switcher" type="button" on:click={() => switchHandler()}>
-  {#if theme === "dark"}
+<button
+  class="theme-switcher"
+  type="button"
+  on:click={() => handleThemeSwitch()}
+>
+  {#key $theme}
     <img
-      src={sun}
+      src={$theme === "dark" ? sun : moon}
       alt="Sun Icon"
       transition:scale={{ duration: 200 }}
       draggable="false"
     />
-  {:else}
-    <img
-      src={moon}
-      alt="Moon Icon"
-      transition:scale={{ duration: 200 }}
-      draggable="false"
-    />
-  {/if}
+  {/key}
 </button>
 
 <style lang="scss">

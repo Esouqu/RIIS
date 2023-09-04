@@ -1,11 +1,10 @@
 <script lang="ts">
-  import { fade, fly } from "svelte/transition";
+  import { fly } from "svelte/transition";
   import type { Range, RangeCell, Skill, SkillLevel } from "@prisma/client";
   import replaceTextTags from "$lib/utils/replaceTextTags";
-  import Tab from "./Tab.svelte";
   import RangeSlider from "./RangeSlider.svelte";
-  import CardContainer from "./CardContainer.svelte";
   import RangeGrid from "./RangeGrid.svelte";
+  import TabbedCard from "./TabbedCard.svelte";
 
   export let skills: Array<
     Skill & {
@@ -26,44 +25,24 @@
   $: currentLevel = allLevels[Math.round(sliderValue) - 1];
   $: currentLevelDescription = replaceTextTags(currentLevel.description);
   $: detailsList = [
-    { title: "SP Cost", value: currentLevel.spCost },
     { title: "Initial SP", value: currentLevel.initSp },
+    { title: "SP Cost", value: currentLevel.spCost },
     {
       title: "Duration",
       value: currentLevel.duration <= 0 ? null : currentLevel.duration,
     },
   ];
-
-  function handleRangeInput(event: Event) {
-    const target = event.target as HTMLInputElement;
-
-    sliderValue = Number(target.value);
-  }
 </script>
 
-<CardContainer
-  --cc-gap={"0"}
-  --cc-p={"0"}
-  --cc-align={"normal"}
-  --cc-width={"100%"}
-  withTitle={false}
+<TabbedCard
+  bind:activeTab={selectedTab}
+  tabsIcons={skills.map((skill) => skill.iconUrl)}
 >
-  <div class="tabs-wrapper">
-    {#each skills as { iconUrl }, idx}
-      <Tab
-        {iconUrl}
-        clickHandler={() => (selectedTab = idx)}
-        isSelected={selectedTab === idx}
-      />
-    {/each}
-  </div>
-  <div class="skill-card">
+  <div class="skill-card" slot="title">
     <div class="skill-card__image">
-      {#key Math.round(sliderValue)}
-        <div class="skill-card__counter">
-          <span transition:fly>{Math.round(sliderValue)}</span>
-        </div>
-      {/key}
+      <div class="skill-card__counter">
+        <span>{Math.round(sliderValue)}</span>
+      </div>
       <img src={skills[selectedTab].iconUrl} alt="" />
     </div>
     <div class="skill-card-title-wrapper">
@@ -82,21 +61,16 @@
           {/if}
         </div>
       </div>
-      <RangeSlider
-        max={allLevels.length}
-        value={sliderValue}
-        step={0.1}
-        on:mouseup={() => (sliderValue = Math.round(sliderValue))}
-        on:input={(e) => handleRangeInput(e)}
-      />
+      <RangeSlider bind:value={sliderValue} max={allLevels.length} />
     </div>
   </div>
-  <div class="skill-card-description-wrapper">
+
+  <div class="skill-card-description-wrapper" slot="content">
     <div class="skill-card__description">
       <p>
-        {#each currentLevelDescription as { text, title, description }}
-          {#if description && title}
-            <span style="color: var(--rarity-color-3);">{description}</span>
+        {#each currentLevelDescription as { text, value }}
+          {#if text && value}
+            <span style="color: var(--rarity-color-3);">{value}</span>
           {:else}
             {text}
           {/if}
@@ -107,7 +81,7 @@
       <RangeGrid cells={currentLevel.range.grid} />
     {/if}
   </div>
-  <div class="skill-card-details-wrapper">
+  <div class="skill-card-details-wrapper" slot="additions">
     {#each detailsList as { title, value }}
       {#if value !== null}
         <div class="skill-card__detail">
@@ -117,20 +91,13 @@
       {/if}
     {/each}
   </div>
-</CardContainer>
+</TabbedCard>
 
 <style lang="scss">
-  .tabs-wrapper {
-    display: flex;
-    gap: 2px;
-  }
-
   .skill-card {
     display: flex;
     align-items: center;
     gap: 20px;
-    padding: 25px 25px 0 25px;
-    background-image: var(--bg-gradient-top);
 
     &__image {
       position: relative;
@@ -207,7 +174,6 @@
     &-description-wrapper {
       display: flex;
       gap: 15px;
-      padding: 20px 30px;
     }
     &__description {
       display: flex;
@@ -215,6 +181,7 @@
       align-items: center;
       font-size: 16px;
       white-space: pre-wrap;
+      font-variant-numeric: tabular-nums;
 
       & p {
         margin: 0;
