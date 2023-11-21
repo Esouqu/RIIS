@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { fly } from "svelte/transition";
   import ArtButton from "./ArtButton.svelte";
   import { draggable } from "@neodrag/svelte";
   import { onMount } from "svelte";
@@ -7,16 +6,16 @@
   import CardContainer from "./CardContainer.svelte";
   import getEliteIcon from "$lib/utils/getEliteIcon";
 
-  export let artList: Array<Art> = [];
-  // export let factions: Array<string> = [];
+  export let artList: Art[] = [];
   export let artistName: string | null;
+  // export let factions: Array<string> = [];
   // export let vaName: string;
 
-  let currentImageIdx = 0;
-  let flyDirection = 0;
-  let artScale = 1;
+  const minScale = 0.7;
+  const maxScale = 3;
 
-  $: currentArt = artList[currentImageIdx].full;
+  let currentImageIdx = 0;
+  let artScale = 1;
 
   onMount(async () => {
     await Promise.all(
@@ -33,22 +32,12 @@
   });
 
   function handleArtButtonClick(idx: number) {
-    const isPositive = currentImageIdx - idx > 0;
-
     artScale = 1;
-
-    if (isPositive) {
-      flyDirection = 300;
-    } else {
-      flyDirection = -300;
-    }
     currentImageIdx = idx;
   }
+
   function handleArtScroll(e: WheelEvent) {
     const scrollUp = e.deltaY < 0;
-    const minScale = 0.7;
-    const maxScale = 3;
-    e.preventDefault();
 
     if (scrollUp && artScale < maxScale) {
       artScale += 0.1;
@@ -70,22 +59,24 @@
       />
     {/each}
   </div>
-  {#key currentArt}
-    <div
-      class="art-wrapper"
-      use:draggable
-      in:fly={{ y: flyDirection, duration: 500 }}
-      out:fly={{
-        y: flyDirection > 0 ? -Math.abs(flyDirection) : Math.abs(flyDirection),
-        duration: 500,
-      }}
-      on:wheel={(e) => handleArtScroll(e)}
-      on:introend={() => (flyDirection = 0)}
-    >
-      <!-- <div class="image-placeholder" /> -->
-      <img src={currentArt} alt="" style:transform={`scale(${artScale})`} />
-    </div>
-  {/key}
+  <div class="art-list-wrapper">
+    {#each artList as { name, full }, idx}
+      <div
+        class="art-wrapper"
+        class:active={idx === currentImageIdx}
+        style="--image-offset: {idx > currentImageIdx ? -300 : 300}px;"
+        use:draggable
+        on:wheel|preventDefault={(e) => handleArtScroll(e)}
+      >
+        <!-- <div class="image-placeholder" /> -->
+        <img
+          src={full}
+          alt="{name} art"
+          style:transform={`scale(${artScale})`}
+        />
+      </div>
+    {/each}
+  </div>
   <div class="info-wrapper">
     <CardContainer title="Info" --cc-align={"start"}>
       <div class="info-value">
@@ -112,14 +103,21 @@
   }
   .art-wrapper {
     position: absolute;
-    top: 0;
-    left: 0;
+    z-index: 0;
     display: flex;
     height: 100%;
     width: 100%;
-    transition: 0.2s;
+    translate: 0 var(--image-offset);
+    opacity: 0;
+    transition: translate 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+      opacity 0.4s linear;
     cursor: grab;
 
+    &.active {
+      z-index: 1;
+      translate: 0 0;
+      opacity: 1;
+    }
     &:active {
       transition: none;
       z-index: 9999;
@@ -131,6 +129,7 @@
       height: 100%;
       object-fit: contain;
       transition: 0.2s;
+      filter: drop-shadow(2px 4px 6px black);
     }
   }
   .info-wrapper {
@@ -143,6 +142,13 @@
   .info-value {
     width: 100%;
     padding: 0 10px;
+  }
+  .art-list-wrapper {
+    position: absolute;
+    display: flex;
+    flex-direction: column-reverse;
+    width: 100%;
+    height: 100%;
   }
   /* .image-placeholder {
     width: 100%;

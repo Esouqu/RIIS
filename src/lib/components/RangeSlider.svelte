@@ -20,6 +20,7 @@
     appearance: none;
     width: 100%;
     height: 10px;
+    margin: 15px 0;
     border-radius: 5px;
     box-shadow: inset 0 2px rgba(0, 0, 0, 0.3);
     background: #c0c0c0;
@@ -27,8 +28,8 @@
 
     &::-webkit-slider-thumb {
       appearance: none;
-      width: 27px;
-      height: 27px;
+      width: 30px;
+      height: 30px;
       transform: rotate(45deg);
       box-shadow: 0 0 7px rgba(0, 0, 0, 0.3);
       background-color: white;

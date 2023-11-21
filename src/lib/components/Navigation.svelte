@@ -9,28 +9,44 @@
 
   export let isExtended: boolean = false;
   const pages = [
-    { name: "Events", path: "/", icon: event },
-    { name: "Operators", path: "/operators", icon: operator },
-    { name: "Recruitment", path: "/recruitment", icon: recruit },
-    { name: "Headhunt", path: "/headhunt", icon: headhunt },
-    { name: "Store", path: "/store", icon: store },
+    { name: "Home", path: "/", icon: event, isReadyToShow: true },
+    {
+      name: "Operators",
+      path: "/operators",
+      icon: operator,
+      isReadyToShow: true,
+    },
+    {
+      name: "Recruitment",
+      path: "/recruitment",
+      icon: recruit,
+      isReadyToShow: true,
+    },
+    {
+      name: "Headhunt",
+      path: "/headhunt",
+      icon: headhunt,
+      isReadyToShow: false,
+    },
+    { name: "Store", path: "/store", icon: store, isReadyToShow: false },
   ];
 </script>
 
 <nav>
   <ul class="nav-list">
-    {#each pages as { name, path, icon } (name)}
+    {#each pages as { name, path, icon, isReadyToShow } (name)}
       <li
         class="nav-list__item"
         class:active={$page.route.id === path}
         class:extended={isExtended}
-        on:click={() => goto(path)}
-        on:keydown={() => goto(path)}
+        class:disabled={!isReadyToShow}
+        on:click={() => isReadyToShow && goto(path)}
+        on:keydown={() => isReadyToShow && goto(path)}
       >
         <div class="nav-list__icon">
           <img src={icon} alt={`${name} icon`} draggable="false" />
         </div>
-        {#if isExtended}
+        {#if isExtended && isReadyToShow}
           <span class="nav-list__name">
             {name}
           </span>
@@ -66,6 +82,30 @@
       transition: 0.2s;
       cursor: pointer;
 
+      &.disabled {
+        &::before {
+          content: "";
+          position: absolute;
+          top: 0;
+          left: 0;
+          z-index: 2;
+          width: 100%;
+          height: 100%;
+          background-image: repeating-linear-gradient(
+            45deg,
+            #0f0f0f,
+            #0f0f0f 10px,
+            var(--rarity-color-5) 10px,
+            var(--rarity-color-5) 20px
+          );
+          opacity: 0.7;
+        }
+
+        &:hover {
+          cursor: default;
+        }
+      }
+
       &.extended {
         padding: 10px 20px 28px 20px;
       }
@@ -90,7 +130,7 @@
         }
       }
 
-      &:hover:not(.active) {
+      &:hover:not(.active):not(.disabled) {
         background-color: var(--hover-color);
       }
     }

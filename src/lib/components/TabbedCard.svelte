@@ -36,7 +36,10 @@
 
 <style lang="scss">
   .tabbed-card {
+    flex: 1 0 auto;
     width: var(--tabbed-w, 100%);
+    border-radius: var(--tabbed-radius, 0);
+    overflow: hidden;
   }
   .tabs-wrapper {
     display: flex;

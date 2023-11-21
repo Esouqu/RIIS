@@ -172,7 +172,7 @@
 </script>
 
 <svelte:head>
-  <title>Events</title>
+  <title>Rhoads Island Information Space</title>
 </svelte:head>
 
 <main class="scroll-container">

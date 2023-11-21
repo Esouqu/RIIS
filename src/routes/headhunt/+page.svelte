@@ -1,3 +1,3 @@
 <svelte:head>
-  <title>Headhunt</title>
+  <title>Headhunt - RIIS</title>
 </svelte:head>

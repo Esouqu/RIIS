@@ -19,13 +19,16 @@
   import ArtViewer from "$lib/components/ArtViewer.svelte";
   import Container from "$lib/components/Container.svelte";
   import Loader from "$lib/components/Loader.svelte";
-  import TalentCard from "$lib/components/TalentCard.svelte";
+  import OperatorTalent from "$lib/components/operator/OperatorTalent.svelte";
   import fetchWithType from "$lib/utils/fetchWithType";
-  import SkillCard from "$lib/components/SkillCard.svelte";
+  import OperatorSkills from "$lib/components/operator/OperatorSkills.svelte";
   import getOperatorClassImage from "$lib/utils/getOperatorClassImage";
-  import getGenderIcon from "$lib/utils/getGenderIcon";
   import Tag from "$lib/components/Tag.svelte";
-  import LevelCard from "$lib/components/LevelCard.svelte";
+  import OperatorLevels from "$lib/components/operator/OperatorLevel.svelte";
+  import CardContainer from "$lib/components/CardContainer.svelte";
+  import getEliteIcon from "$lib/utils/getEliteIcon";
+  import getPotentialIcon from "$lib/utils/getPotentialIcon";
+  import FilterButton from "$lib/components/FilterButton.svelte";
 
   interface IRangeConnect {
     range: Range & {
@@ -54,121 +57,152 @@
     favor: OperatorAttributes;
   }
 
-  let operator: Operator & IOperatorConnects;
-  let isOperatorLoading = true;
+  export let data;
+  let selectedPhase = 0;
+  let selectedSkillIdx = 0;
+  let isPotentialActive = false;
+  let isFavorActive = false;
 
-  onMount(async () => {
-    await fetchWithType<Operator & IOperatorConnects>(
-      `/api/operators/${$page.params.operator}`
-    ).then((data) => {
-      operator = data;
-    });
+  $: operator = data.operator as Operator & IOperatorConnects;
+  // $: console.log(data);
 
-    isOperatorLoading = false;
-  });
+  function handleEliteButtonClick(idx: number) {
+    selectedSkillIdx = 0;
+    selectedPhase = idx;
+  }
 
-  $: console.log(operator);
+  // $: console.log(operator);
 </script>
 
 <svelte:head>
-  {#if isOperatorLoading}
-    <title>Operator</title>
-  {:else}
-    <title>{operator.name}</title>
-  {/if}
+  <title>{operator ? operator.name : "Operator"} - RIIS</title>
 </svelte:head>
 
 <main class="main">
   <section class="section section_art">
-    <Container>
-      {#if isOperatorLoading}
-        <Loader />
-      {:else}
-        <ArtViewer artList={operator.artList} artistName={operator.artist} />
-      {/if}
-    </Container>
+    <ArtViewer artList={operator.artList} artistName={operator.artist} />
   </section>
 
   <section class="section section_info">
     <div class="info-wrapper">
-      <div class="nameplate">
-        {#if isOperatorLoading}
-          <Loader />
-        {:else}
-          <div class="nameplate-inner-wrapper">
-            <div class="name-wrapper">
-              {#if operator.name.split(" the ").length > 1}
-                <div>
-                  <h1>{operator.name.split(" the ")[0]}</h1>
-                  <h2>the {operator.name.split(" the ")[1]}</h2>
-                </div>
-              {:else}
-                <h1>{operator.name}</h1>
-              {/if}
-              <div class="stars-wrapper">
-                {#each { length: operator.rarity + 1 } as _, idx}
-                  <div class="star" in:fade={{ delay: 50 * idx }}>
-                    <img src={star} alt="star" />
-                  </div>
-                {/each}
+      <CardContainer
+        --cc-direction="column"
+        --cc-justify="start"
+        --cc-gap="20px"
+        --cc-p="20px"
+        --cc-overflow="auto"
+      >
+        <div class="nameplate">
+          <div class="name-wrapper">
+            {#if operator.name.split(" the ").length > 1}
+              <div>
+                <h1>{operator.name.split(" the ")[0]}</h1>
+                <h2>the {operator.name.split(" the ")[1]}</h2>
               </div>
-            </div>
-            <div class="class-image-wrapper">
-              <img src={getOperatorClassImage(operator.class)} alt="" />
-            </div>
-            <div class="tags-wrapper">
-              <Tag iconUrl={getGenderIcon(operator.gender)} isOnlyIcon={true} />
-              {#each operator.tagList as tag}
-                <Tag text={tag} />
+            {:else}
+              <h1>{operator.name}</h1>
+            {/if}
+            <div class="stars-wrapper">
+              {#each { length: operator.rarity + 1 } as _, idx}
+                <div class="star" in:fade={{ delay: 50 * idx }}>
+                  <img src={star} alt="star" />
+                </div>
               {/each}
             </div>
           </div>
-        {/if}
-      </div>
-      <Container
-        --cont-px={"20px"}
-        --cont-py={"15px"}
-        --cont-gap={"15px"}
-        --cont-justify={"start"}
-        --cont-overflow={"auto"}
-      >
-        {#if isOperatorLoading}
-          <Loader />
-        {:else}
-          <TalentCard
-            title={operator.subClass}
-            titleGradient={"center"}
-            withIcon={true}
-            iconUrl={operator.subClass}
-            description={operator.trait !== null ? operator.trait : undefined}
-            withBorderRadius={true}
-          />
-
-          {#if operator.talents.length > 0}
-            <div class="talents-wrapper">
-              {#each operator.talents as { name, levels }, idx}
-                <TalentCard
-                  title={name}
-                  titlePosition={"left"}
-                  titleGradient={"left"}
-                  description={levels[0].description}
-                  {levels}
-                  withBorderRadius={operator.talents.length - 1 === idx}
-                />
-              {/each}
+          <div class="classes-wrapper">
+            <div class="class-image-wrapper">
+              <img src={getOperatorClassImage(operator.class)} alt="" />
             </div>
-          {/if}
-
-          {#if operator.skills.length > 0}
-            <SkillCard skills={operator.skills} />
-          {/if}
-          <LevelCard
-            phases={operator.phases}
-            potential={operator.potential}
-            favor={operator.favor}
+            <div class="class-image-wrapper">
+              <img
+                src={`https://raw.githubusercontent.com/Aceship/Arknight-Images/main/ui/subclass/sub_${operator.subClass}_icon.png`}
+                alt=""
+              />
+            </div>
+          </div>
+        </div>
+        <div class="tags-wrapper">
+          <Tag text={operator.gender} />
+          {#each operator.tagList as tag}
+            <Tag text={tag} />
+          {/each}
+        </div>
+        <div class="elite-buttons-wrapper">
+          {#each operator.phases as _, idx}
+            <FilterButton
+              icon={getEliteIcon(idx)}
+              isSelected={selectedPhase === idx}
+              on:click={() => handleEliteButtonClick(idx)}
+              --fltr-btn-w="100%"
+              --fltr-btn-h="auto"
+              --fltr-btn-size="30px"
+            />
+          {/each}
+          <FilterButton
+            icon={getPotentialIcon(6)}
+            isSelected={isPotentialActive}
+            on:click={() => (isPotentialActive = !isPotentialActive)}
+            --fltr-button-w="100%"
+            --fltr-btn-h="auto"
+            --fltr-btn-size="30px"
           />
+          <!-- <FilterButton
+            text="F"
+            isSelected={isFavorActive}
+            on:click={() => (isFavorActive = !isFavorActive)}
+            --fltr-button-w="100%"
+            --fltr-btn-h="auto"
+            --fltr-btn-size="30px"
+          /> -->
+        </div>
+
+        <Container --cont-gap="20px" --cont-p="20px">
+          <OperatorTalent
+            title={operator.subClass}
+            description={operator.trait}
+          />
+          {#if operator.talents.length > 0}
+            {#each operator.talents as { name, levels }}
+              {@const baseLevel = levels.find(
+                (level) =>
+                  level.potential === 0 && level.phase === selectedPhase
+              )}
+              {@const potentialLevel = levels.find(
+                (level) =>
+                  level.potential !== 0 && level.phase === selectedPhase
+              )}
+
+              {#if isPotentialActive && potentialLevel}
+                <OperatorTalent
+                  title={name}
+                  description={potentialLevel.description}
+                  range={potentialLevel.range?.grid}
+                />
+              {:else if baseLevel}
+                <OperatorTalent
+                  title={name}
+                  description={baseLevel.description}
+                  range={baseLevel.range?.grid}
+                />
+              {/if}
+            {/each}
+          {/if}
+        </Container>
+
+        {#if operator.skills.length > 0}
+          <Container --cont-gap="20px" --cont-p="20px">
+            <OperatorSkills
+              skills={operator.skills}
+              {selectedPhase}
+              bind:selectedSkillIdx
+            />
+          </Container>
         {/if}
-      </Container>
+        <Container --cont-gap="20px" --cont-p="20px">
+          <OperatorLevels phase={operator.phases[selectedPhase]} />
+        </Container>
+      </CardContainer>
     </div>
   </section>
 </main>
@@ -177,13 +211,17 @@
   .main {
     display: grid;
     grid-template-columns: 1fr auto;
-    gap: 20px;
     height: 100vh;
     overflow: hidden;
   }
   .section {
     overflow: hidden;
 
+    &_art {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
     &_info {
       display: flex;
       justify-content: center;
@@ -192,35 +230,28 @@
   .info-wrapper {
     display: flex;
     flex-direction: column;
-    justify-content: center;
     min-width: 500px;
     max-width: 500px;
+    overflow: auto;
   }
   .nameplate {
     position: relative;
     display: flex;
+    flex-direction: column;
     justify-content: center;
-    padding: 20px;
-    background-color: var(--bg-sub-accent-color);
-    box-shadow: var(--box-shadow-options);
-
-    &-inner-wrapper {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-      width: 100%;
-    }
+    gap: 10px;
   }
   .name-wrapper {
     display: flex;
     flex-direction: column;
-    max-width: 340px;
+    align-items: center;
 
     & h1 {
       margin: 0;
       font-size: 39.09px;
       line-height: 1;
       font-weight: 600;
+      text-align: center;
       text-transform: uppercase;
     }
 
@@ -232,22 +263,29 @@
       text-transform: uppercase;
     }
   }
+  .classes-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+  }
   .class-image-wrapper {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    width: 98px;
-    height: 98px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    height: 50px;
 
     & img {
       width: 100%;
+      height: 100%;
+      object-fit: contain;
       filter: invert(var(--img-invert));
-      transition: 0.2s;
     }
   }
   .stars-wrapper {
     display: flex;
     flex-direction: row;
+    justify-content: center;
 
     & .star {
       display: flex;
@@ -256,9 +294,13 @@
   }
   .tags-wrapper {
     display: flex;
+    justify-content: center;
     gap: 5px;
   }
-  .talents-wrapper {
+  .elite-buttons-wrapper {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
     width: 100%;
   }
 </style>

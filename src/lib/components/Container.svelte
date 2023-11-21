@@ -1,17 +1,8 @@
 <script lang="ts">
   export let htmlTag: string = "div";
-  export let id: string = "";
-  export let isHovered: boolean = false;
 </script>
 
-<svelte:element
-  this={htmlTag}
-  class="container"
-  class:hovered={isHovered}
-  id={id ? id : null}
-  on:mouseleave
-  on:mouseenter
->
+<svelte:element this={htmlTag} class="container">
   <slot />
 </svelte:element>
 
@@ -27,11 +18,8 @@
     width: var(--cont-w, 100%);
     height: var(--cont-h, 100%);
     padding: var(--cont-p, var(--cont-py, 0px) var(--cont-px, 0px));
-    /* outline: 2px solid var(--bg-sub-color);
-    outline-offset: -2px; */
-    background-color: var(--bg-sub-accent-color-30);
-    overflow-y: var(--cont-overflow, hidden);
-    overflow-x: hidden;
+    box-shadow: var(--box-shadow-options);
+    background-color: var(--cont-bg, var(--bg-color));
 
     &::-webkit-scrollbar {
       position: absolute;

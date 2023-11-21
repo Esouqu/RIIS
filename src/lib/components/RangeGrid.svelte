@@ -1,8 +1,5 @@
 <script lang="ts">
-  interface ICell {
-    row: number;
-    col: number;
-  }
+  import type { ICell } from "$lib/interfaces";
 
   export let cells: ICell[] = [];
 
@@ -42,8 +39,8 @@
 
     &__inner {
       display: grid;
-      grid-auto-columns: 20px;
-      grid-auto-rows: 20px;
+      grid-auto-columns: 17px;
+      grid-auto-rows: 17px;
       gap: 2px;
     }
     &__cell {

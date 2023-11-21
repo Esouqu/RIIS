@@ -4,12 +4,15 @@
   import Tag from "$lib/components/Tag.svelte";
   import Container from "$lib/components/Container.svelte";
   import fetchWithType from "$lib/utils/fetchWithType";
-  import OperatorPortrait from "$lib/components/OperatorPortrait.svelte";
+  import OperatorPortrait from "$lib/components/operator/OperatorPortrait.svelte";
   import Loader from "$lib/components/Loader.svelte";
   import CardContainer from "$lib/components/CardContainer.svelte";
+  import { fade } from "svelte/transition";
+  import PageLoader from "$lib/components/PageLoader.svelte";
 
   const MAX_SELECTED_TAGS = 5;
 
+  let isLoading = true;
   let operators: Operator[] = [];
   let isOperatorsLoading = true;
   let selectedTags: string[] = [];
@@ -19,6 +22,7 @@
       (data) => (operators = data)
     );
 
+    isLoading = false;
     isOperatorsLoading = false;
   });
 
@@ -94,74 +98,74 @@
 </script>
 
 <svelte:head>
-  <title>Recruitment</title>
+  <title>Recruitment - RIIS</title>
 </svelte:head>
 
 <main class="main">
-  <Container --cont-justify={"start"}>
-    <div class="scroll-container">
-      {#if isOperatorsLoading}
-        <Loader />
+  <div class="scroll-container">
+    {#if isLoading}
+      <PageLoader />
+    {/if}
+    <div class="grid">
+      {#if variants.length < 1}
+        {#each operators as { id, name, rarity, portraitUrl }}
+          <OperatorPortrait
+            {name}
+            {rarity}
+            operatorId={id}
+            imageUrl={portraitUrl}
+            isInteractable={!isLoading}
+            on:click={() => (isLoading = true)}
+          />
+        {/each}
       {:else}
-        <div class="filters-wrapper">
-          <CardContainer --cc-p={"20px"} --cc-gap={"20px"} withTitle={false}>
-            <div class="tags-wrapper">
-              {#each tags as tag}
-                <Tag
-                  --tag-uSelect={"none"}
-                  --tag-cursor={"pointer"}
-                  text={tag}
-                  isSelectable={true}
-                  isSelected={selectedTags.includes(tag)}
-                  on:click={() => toggleTag(tag)}
-                />
-              {/each}
+        {#each variants as { connections, matchingOperators }}
+          {#if matchingOperators.length > 0}
+            <div class="variant-wrapper">
+              <div class="tags-wrapper">
+                {#each connections as tag} <Tag text={tag} /> {/each}
+              </div>
+              <div
+                style="display: flex; flex-wrap: wrap; justify-content: center; gap: 5px;"
+              >
+                {#each matchingOperators as { id, name, rarity, portraitUrl }}
+                  <OperatorPortrait
+                    {name}
+                    {rarity}
+                    operatorId={id}
+                    imageUrl={portraitUrl}
+                    isInteractable={!isLoading}
+                    on:click={() => (isLoading = true)}
+                  />
+                {/each}
+              </div>
             </div>
-            <button
-              type="button"
-              class="clear-button"
-              on:click={() => (selectedTags = [])}>Clear</button
-            >
-          </CardContainer>
-        </div>
-        <div class="grid">
-          {#if variants.length < 1}
-            {#each operators as { id, name, rarity, portraitUrl }, idx}
-              <OperatorPortrait
-                {name}
-                {rarity}
-                operatorId={id}
-                imageUrl={portraitUrl}
-                transitionDelay={5 * idx}
-              />
-            {/each}
-          {:else}
-            {#each variants as { connections, matchingOperators }}
-              {#if matchingOperators.length > 0}
-                <div class="variant-wrapper">
-                  <div class="tags-wrapper">
-                    {#each connections as tag} <Tag text={tag} /> {/each}
-                  </div>
-                  <div
-                    style="display: flex; flex-wrap: wrap; justify-content: center; gap: 5px;"
-                  >
-                    {#each matchingOperators as { id, name, rarity, portraitUrl }}
-                      <OperatorPortrait
-                        {name}
-                        {rarity}
-                        operatorId={id}
-                        imageUrl={portraitUrl}
-                      />
-                    {/each}
-                  </div>
-                </div>
-              {/if}
-            {/each}
           {/if}
-        </div>
+        {/each}
       {/if}
     </div>
-  </Container>
+    <div class="filters-wrapper">
+      <CardContainer --cc-p={"20px"} --cc-gap={"20px"}>
+        <div class="tags-wrapper">
+          {#each tags as tag}
+            <Tag
+              --tag-uSelect={"none"}
+              --tag-cursor={"pointer"}
+              text={tag}
+              isSelectable={true}
+              isSelected={selectedTags.includes(tag)}
+              on:click={() => toggleTag(tag)}
+            />
+          {/each}
+        </div>
+        <button
+          type="button"
+          class="clear-button"
+          on:click={() => (selectedTags = [])}>Clear</button
+        >
+      </CardContainer>
+    </div>
+  </div>
 </main>
 
 <style lang="scss">
@@ -172,18 +176,36 @@
     max-width: 735px;
   }
   .filters-wrapper {
+    position: sticky;
+    bottom: 0;
+    z-index: 1;
     display: flex;
     flex-direction: row;
+    justify-content: center;
     gap: 5px;
+    max-width: 100%;
+    padding: 40px 20px;
+    opacity: 0.7;
+    transition: 0.2s;
+
+    /* &.scrollEnd {
+      opacity: 1;
+    } */
+
+    &:hover:not(.scrollEnd) {
+      opacity: 1;
+    }
   }
   .scroll-container {
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     align-items: center;
     gap: 40px;
     height: calc(100vh - 40px);
     padding: 20px 40px;
     overflow-y: auto;
+    scrollbar-gutter: stable;
   }
   .variant-wrapper {
     display: flex;
@@ -195,7 +217,7 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 10px;
+    gap: 5px;
     width: 100%;
   }
   .clear-button {

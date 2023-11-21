@@ -17,10 +17,9 @@
   label {
     position: relative;
     display: block;
-    width: 60px;
-    height: 30px;
+    width: 52px;
+    height: 25px;
     border-radius: 100px;
-    text-indent: -9999px;
     background: grey;
     cursor: pointer;
     user-select: none;
@@ -33,8 +32,8 @@
     left: 5px;
     bottom: 0;
     margin: auto 0;
-    width: 24px;
-    height: 24px;
+    width: 21px;
+    height: 21px;
     background: #fff;
     border-radius: 100%;
     transition: 0.2s;
