@@ -2,7 +2,7 @@
 </script>
 
 <svelte:head>
-  <title>Store</title>
+  <title>Store - RIIS</title>
 </svelte:head>
 
 <style lang="scss">

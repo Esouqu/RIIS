@@ -12,7 +12,7 @@ export default function getGenderIcon(gender: string | null): string {
       return female
     }
     default: {
-      return ''
+      return 'conviction'
     }
   }
 }

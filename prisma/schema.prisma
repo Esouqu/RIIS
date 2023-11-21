@@ -20,10 +20,11 @@ model EventPost {
 }
 
 model Art {
-  id         String    @id @unique @default(uuid())
-  name       String
-  portrait   String
-  full       String
+  id       String @id @unique
+  name     String
+  portrait String
+  full     String
+
   operatorId String?
   Operator   Operator? @relation(fields: [operatorId], references: [id])
 }
@@ -111,6 +112,7 @@ model OperatorAttributes {
 
   OperatorPhase   OperatorPhase? @relation(fields: [operatorPhaseId], references: [id])
   operatorPhaseId String?
+  Operator        Operator[]
 }
 
 model OperatorPhase {
@@ -124,30 +126,43 @@ model OperatorPhase {
   rangeId    String?
 }
 
+model PotentialRank {
+  id          String @id @unique
+  type        String
+  value       Float
+  description String
+
+  Operator   Operator? @relation(fields: [operatorId], references: [id])
+  operatorId String?
+}
+
 model Operator {
-  id                 String          @id
-  displayNumber      String?         @unique
-  position           String
-  rarity             Int
-  tagList            String[]
-  recruitmentTagList String[]
-  trait              String?
-  class              String
-  group              String?
-  isObtainable       Boolean
-  nation             String?
-  subClass           String
-  team               String?
-  name               String
-  obtainApproach     String?
-  gender             String?
-  artist             String?
-  va                 String
-  portraitUrl        String
-  artList            Art[]
-  summons            Summon[]
-  talents            Talent[]
-  skills             Skill[]         @relation("OperatorToSkill")
-  phases             OperatorPhase[]
-  releaseDate        DateTime?
+  id                   String              @id
+  displayNumber        String?             @unique
+  position             String
+  rarity               Int
+  tagList              String[]
+  recruitmentTagList   String[]
+  trait                String
+  class                String
+  group                String?
+  isObtainable         Boolean
+  nation               String?
+  subClass             String
+  team                 String?
+  name                 String
+  obtainApproach       String?
+  gender               String?
+  artist               String?
+  va                   String
+  portraitUrl          String
+  artList              Art[]
+  summons              Summon[]
+  talents              Talent[]
+  skills               Skill[]             @relation("OperatorToSkill")
+  phases               OperatorPhase[]
+  potential            PotentialRank[]
+  favor                OperatorAttributes? @relation(fields: [operatorAttributesId], references: [id])
+  releaseDate          DateTime?
+  operatorAttributesId String?
 }

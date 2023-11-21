@@ -5,31 +5,10 @@
   import HomeLogo from "$lib/components/HomeLogo.svelte";
   import Navigation from "$lib/components/Navigation.svelte";
   import ThemeSwitcher from "$lib/components/ThemeSwitcher.svelte";
-  import { theme, sidebar } from "$lib/stores/stores";
-  import { onMount } from "svelte";
+  import { sidebar } from "$lib/stores";
   import { scale } from "svelte/transition";
 
   $: isSidebarExtended = JSON.parse($sidebar);
-
-  function handleSidebar() {
-    $sidebar = isSidebarExtended ? "false" : "true";
-  }
-  function handleThemeSwitch() {
-    const body = document.querySelector("body");
-
-    $theme = $theme === "light" ? "dark" : "light";
-    body?.classList.toggle("dark-theme");
-  }
-
-  onMount(() => {
-    const body = document.querySelector("body");
-
-    if ($theme === "light") {
-      body?.classList.remove("dark-theme");
-    } else {
-      body?.classList.add("dark-theme");
-    }
-  });
 </script>
 
 <div class="wrapper" class:extended={isSidebarExtended}>
@@ -39,11 +18,11 @@
       <Navigation isExtended={isSidebarExtended} />
     </header>
     <footer class="footer">
-      <ThemeSwitcher theme={$theme} switchHandler={() => handleThemeSwitch()} />
+      <ThemeSwitcher />
       <button
         class="footer__button"
         type="button"
-        on:click={() => handleSidebar()}
+        on:click={() => ($sidebar = isSidebarExtended ? "false" : "true")}
       >
         {#if isSidebarExtended}
           <img src={arrowLeft} alt="" draggable="false" transition:scale />

@@ -1,11 +1,9 @@
 <script lang="ts">
-  export let title: string = "Title";
-  export let withTitle: boolean = true;
-  export let withBorderRadius: boolean = true;
+  export let title: string | null = null;
 </script>
 
-<div class="card-container" class:bordered={withBorderRadius}>
-  {#if withTitle}
+<div class="card-container">
+  {#if title}
     <span>{title}</span>
   {/if}
   <slot />
@@ -21,15 +19,13 @@
     width: var(--cc-width, auto);
     padding: var(--cc-p, 10px);
     box-shadow: var(--box-shadow-options);
-    background-color: var(--bg-color);
+    background-color: var(--bg-sub-color-70);
+    /* backdrop-filter: blur(7px) opacity(0.7); */
+    overflow: var(--cc-overflow);
 
     & span {
       font-size: var(--cc-titleSize, 14px);
       font-weight: 500;
-    }
-
-    &.bordered {
-      border-radius: 0 0 10px 10px;
     }
   }
 </style>

@@ -13,11 +13,14 @@ export const GET: RequestHandler = async () => {
       portraitUrl: true,
       rarity: true,
       class: true,
+      gender: true,
+      position: true,
+      phases: true,
     },
     orderBy: [
       { rarity: 'desc' },
       { releaseDate: 'desc' },
-    ]
+    ],
   });
 
   return json(operators);

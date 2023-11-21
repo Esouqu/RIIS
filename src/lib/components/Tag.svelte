@@ -1,7 +1,5 @@
 <script lang="ts">
-  export let text: string | null = null;
-  export let iconUrl: string | null = null;
-  export let isOnlyIcon: boolean = false;
+  export let text: string | null;
   export let isSelected: boolean = false;
   export let isSelectable: boolean = false;
 </script>
@@ -13,43 +11,52 @@
   on:click
   on:keydown
 >
-  {#if iconUrl}
-    <img src={iconUrl} alt="" />
-  {/if}
-  {#if !isOnlyIcon}
-    <span>{text}</span>
-  {/if}
+  <span>{text ? text : "Conviction"}</span>
 </div>
 
 <style lang="scss">
   .tag {
+    position: relative;
+    display: flex;
+    justify-content: center;
     padding: 5px;
     box-shadow: var(--box-shadow-options);
-    background-color: var(--bg-accent-color);
-    opacity: 1;
+    background-color: var(--bg-color);
 
     & span {
+      position: relative;
+      z-index: 1;
       font-weight: 500;
     }
 
-    & img {
-      height: 100%;
-      filter: invert(var(--img-invert));
-    }
-
     &_selectable {
-      opacity: 0.5;
       user-select: none;
       cursor: pointer;
 
-      &.selected {
-        opacity: 1;
-        color: #f4f5f6;
-        background-color: var(--rarity-color-3);
+      &:hover:not(.selected)::before {
+        height: 10%;
+      }
+      &:active:not(.selected)::before {
+        height: 30%;
       }
 
-      &:hover {
-        opacity: 0.8;
+      &::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        height: 0px;
+        background-color: var(--rarity-color-3);
+        transition: 0.2s;
+      }
+
+      &.selected {
+        color: #f4f5f6;
+
+        &::before {
+          height: 100%;
+        }
       }
     }
   }

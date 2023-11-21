@@ -12,6 +12,9 @@ export default function getOperatorClassImage(className: string): string {
     case 'defender': {
       return tank
     }
+    case 'tank': {
+      return tank
+    }
     case 'caster': {
       return caster
     }
@@ -21,16 +24,28 @@ export default function getOperatorClassImage(className: string): string {
     case 'vanguard': {
       return pioneer
     }
+    case 'pioneer': {
+      return pioneer
+    }
     case 'sniper': {
       return sniper
     }
     case 'specialist': {
       return special
     }
+    case 'special': {
+      return special
+    }
     case 'supporter': {
       return support
     }
+    case 'support': {
+      return support
+    }
     case 'guard': {
+      return warrior
+    }
+    case 'warrior': {
       return warrior
     }
     default: {
